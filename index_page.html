@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Go to url</title>
+  <style type="text/css" media="screen">
+    .urlBtn {
+      color: #fff;
+      background: #0f9;
+      border: 2px solid #0ff;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="vue.min.js"></script>
+  <script src="jquery-3.2.1.js"></script>
+
+  <div class="top">
+    <!-- 上一页按钮 -->
+    <button @click="pageUp" type="button" name="button">上一页</button>
+    <!-- 小于总页数时为真，显示页数，大于则false隐藏 -->
+    <button :class="{urlBtn:judge==i+page_index}" @click="jump(i+page_index)" v-if="i+page_index <= allPage" v-for="page_index in num" type="button" name="button">{{i+page_index}}</button>
+    <!-- 下一页按钮 -->
+    <button @click="pageDown" type="button" name="button">下一页</button>
+    <!-- 数字跳转页面 -->
+    <input v-model="jumpNum" type="number" name="" value=""><button @click="jump(jumpNum)" type="button" name="button">Go to</button> {{pageIndex}}
+  </div>
+
+  <script type="text/javascript">
+    window.onload = function() {
+      new Vue({
+        el: ".top",
+        data: {
+          i: 0,
+          allPage: 30,
+          pageIndex: 0,
+          num: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          jumpNum: "",
+          judge: 1
+        },
+        methods: {
+          //上一页
+          pageUp: function() {
+            this.i -= this.num.length;
+            if (this.i < 0) {
+              this.i = 0;
+            }
+            //默认显示每一行里第一个页面的内容
+            this.jump(this.i + 1);
+          },
+          //下一页
+          pageDown: function() {
+            //i的值小于总页数-展示页数的值
+            if (this.i < this.allPage - this.num.length) {
+              //i的值变为加上展示页数的值
+              this.i += this.num.length;
+            }
+            //默认显示每一行里第一个页面的内容
+            this.jump(this.i + 1);
+          },
+          //数字判断
+          judgeNumber: function(page_index) {
+            //输入的页数小于等于总页数并且对展示页数取余不等于0
+            if (page_index <= this.allPage && page_index % this.num.length !== 0) {
+              //i的值就等于输入页数对展示页数取整再乘以展示页数的值，划分在每个展示页数的区间
+              this.i = Math.floor(page_index / this.num.length) * this.num.length;
+            }
+            //输入的页数小于等于总页数并且对展示页数取余等于0
+            if (page_index <= this.allPage && page_index % this.num.length === 0) {
+              //i的值就等于输入页数对展示页数取整再乘以展示页数的值再减去展示页数的值，划分在每个展示页数的区间
+              this.i = Math.floor(page_index / this.num.length) * this.num.length - this.num.length;
+            }
+          },
+          // 数字跳转
+          jump: function(page_index) {
+            //声明正则表达式
+            var re = /^[0-9]*[1-9][0-9]*$/;
+            //利用正则表达式判断是否为正整数
+            if (!re.test(page_index)) {
+              alert("请输入纯数字");
+            } else {
+              //若果输入页数大于总页数
+              if (page_index > this.allPage) {
+                // 初始化为总页数的值
+                page_index = this.allPage;
+                // 数字判断并跳转
+                this.judgeNumber(page_index);
+              } else {
+                this.judgeNumber(page_index);
+              }
+              //ajax获取页面数据
+              this.pageIndex = page_index;
+              //把获取到的页数赋值给判断条件judge,点亮css
+              this.judge = page_index;
+              console.log(this.pageIndex);
+            }
+              //清空输入
+              this.jumpNum = null;
+          }
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

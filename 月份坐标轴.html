@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>---数组对比---</title>
+	<style type="text/css">
+		b {
+			
+			display: inline-block;
+			width: 100%;
+			height: 150px;
+			background: #f09 url('nico_02.jpg') no-repeat center;
+		}
+	</style>
+</head>
+<body>
+	<b>www.jb51.net</b> 
+	<div></div>
+
+	<script type="text/javascript">
+		window.onload = function() {
+		var _date=[],dateData=["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+		//准备一个月份反转的数组
+		var dateDataRet=Object.assign([],dateData).reverse();
+		//获取当前年份
+		var yearText=new Date().getFullYear();
+		//获取当前月份  调试的时候，大家可以通过调整now调试  3月-now=2,12月now=11...
+		var now=new Date().getMonth(); //获取到的是0-11dd
+
+		//数组对比
+		var arrayA = [a, b, c];
+		console.log(arrayA);
+
+
+
+	}
+	</script>
+</body>
+</html>

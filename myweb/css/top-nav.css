@@ -1,0 +1,312 @@
+* {
+  -moz-webkit-box-sizing: border-box;
+  -o-webkit-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body, * {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.bar-login::after {
+  position: absolute;
+  content: "";
+  height: 0;
+  width: 0;
+  bottom: -35px;
+  right: 0;
+  border: 25px;
+  border-top: 10px;
+  border-style: solid;
+  border-color: #f5f transparent transparent transparent;
+}
+
+.bar-login::before {
+  position: absolute;
+  content: "";
+  height: 0;
+  width: 0;
+  top: -35px;
+  right: 0;
+  border: 25px;
+  border-bottom: 10px;
+  border-style: solid;
+  border-color: transparent transparent #f5f transparent;
+}
+
+.bar-login:hover {
+  -webkit-transform: scale(1.2,1.2);
+  -ms-transform: scale(1.2,1.2);
+  transform: scale(1.2,1.2);
+}
+
+.bar-login {
+  position: absolute;
+  bottom: 0;
+  width: 50px;
+  height: 30px;
+  right: 0px;
+  background-color: #f5f;
+  font-size: 14px;
+  text-align: center;
+  z-index: 9;
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.bar-search:hover .bar-search-button {
+  background-color: #fff;
+}
+
+.bar-search:hover .bar-search-input {
+  background-color: #fff;
+}
+
+.bar-search-button:hover::after {
+  background-color: #f5f;
+}
+
+.bar-search-button:hover::before {
+  border-color: #f5f;
+}
+
+.bar-search-button::after {
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  content: "";
+  width: 10px;
+  height: 4px;
+  background: #09f;
+  border-radius: 0 5px 5px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.bar-search-button::before {
+  position: absolute;
+  bottom: 5px;
+  right: 8px;
+  content: "";
+  width: 15px;
+  height: 15px;
+  border: 3px solid #09f;
+  border-radius: 30px;
+  /*box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 3);*/
+}
+
+.bar-search-button {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  outline: none;
+  border: 1px solid transparent;
+  border-left: none;
+  border-radius: 0 7px 7px 0;
+  background-color: #f9f0da;
+  cursor: pointer;
+}
+
+.bar-search-input {
+  width: 100%;
+  height: 32px;
+  padding: 0 52px 0 10px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  outline: none;
+  background: #F9F0DA;
+}
+
+.bar-search {
+  position: absolute;
+  right: 145px;
+  bottom: 2px;
+  opacity: 0.8;
+}
+
+.align-img {
+  position: relative;
+  bottom: -1px;
+}
+
+.top-bar-menu li:hover {
+  opacity: 1;
+}
+
+.top-bar-menu li:first-child {
+  border-radius: 0 0 0 7px;
+}
+
+.top-bar-menu li:last-child {
+  border-radius: 0 0 7px 0;
+}
+
+.top-bar-menu li {
+  display: inline-block;
+  font-size: 14px;
+  padding: 3px 10px;
+  background-color: #09f;
+  color: #fff;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.top-bar-menu {
+  position: absolute;
+  list-style-type: none;
+  height: 22px;
+  font-size: 0;
+  right: 0;
+}
+
+.top-bar {
+  width: 100%;
+}
+
+.bottom-bar {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.menu>li:first-child {
+  border-radius: 12px 0 0 0;
+}
+
+.menu>li:last-child {
+  border-radius: 0 12px 0 0;
+}
+
+.menu>li {
+  display: inline-block;
+  font-size: 16px;
+}
+
+.bar {
+  position: absolute;
+  font-size: 0px;
+  bottom: 0;
+  width: 600px;
+  z-index: 9;
+}
+
+.bar ul {
+  position: relative;
+}
+
+.bar li {
+  line-height: 32px;
+  padding: 0 20px;
+  background: #09f;
+  color: #fff;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.bar li ul {
+  position: absolute;
+  height: 0;
+  top: 32px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.bar li ul li {
+  width: auto;
+  background: #f90;
+  /*动画简写属性,类型名称 完成耗时 速度曲线 延时时间*/
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  /*独立写法*/
+  /*transition-property: translate();
+  transition-duration: 0.3s;*/
+  /*淡入*/
+  opacity: 0;
+  border-radius: 3px;
+}
+
+.bar li:hover ul {
+  overflow: visible;
+}
+
+
+/*规定属于父元素 .bar li ul li 下的第1乘n个元素*/
+
+.bar li ul li:nth-of-type(1n) {
+  /*translate3d(x,y,z)定义3d转换*/
+  -webkit-transform: translate3d(100%, 0, 0);
+  -ms-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+
+.bar li ul li:nth-of-type(2n) {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+
+.bar li:hover ul li {
+  /*恢复原样*/
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  /*淡入*/
+  opacity: 1;
+}
+
+.bar li ul li:nth-of-type(2) {
+  -webkit-transition-delay: 0.1s;
+  -o-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+}
+
+.bar li ul li:nth-of-type(3) {
+  -webkit-transition-delay: 0.2s;
+  -o-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+
+.bar li ul li:nth-of-type(4) {
+  -webkit-transition-delay: 0.4s;
+  -o-transition-delay: 0.4s;
+  transition-delay: 0.4s;
+}
+
+.bar li ul li:nth-of-type(5) {
+  -webkit-transition-delay: 0.5s;
+  -o-transition-delay: 0.5s;
+  transition-delay: 0.5s;
+}
+
+.top-img-container {
+  width: 980px;
+  height: 170px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.top-img {
+  width: 100%;
+  height: 170px;
+  background-repeat: no-repeat;
+  /*实现居中缩放*/
+  background-position: top;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  height: 170px;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>---主域---</title>
+	<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js">
+	</script>
+	<style type="text/css">
+		*{
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		.border {
+			border: 2px solid #09f;
+			margin: 10px 0;
+		}
+	</style>
+</head>
+<body>
+<div class="border"></div>
+
+<script type="text/javascript">
+	(function(win, doc, undefined) {
+		//定义一个类
+		var fn = function() {};
+		//覆写原型链，给继承者提供方法
+		fn.prototype = {
+			getLocalCookie: function(k) {
+				k = k || "localDataTemp";
+				//先检查localStorage能不能用，不能则使用Cooie
+				return typeof win.localStorage !== "undefined"? localStorage.getItem(k) : (function() {
+					//切割cookie数据
+					var all = doc.cookie.split(";");
+					//存储cookie数据
+					var cookieData = {};
+					for (var i = 0, len = all.length; i < len; i++) {
+						p = all[i].indexOf("=");  //记录第一次遇到=的下标值
+						var dataName = all[i].substring(0, p).replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,"");  //0到p不包括p之间的保存为字符串,\uFEFF为es5新增的空白符，\XA0是不间断空白符 &nbsp, /g表示替换所有匹配;
+						cookieData[dataName] = all[i].substring(p+1); //传入value	{dataName : value}
+					}
+					return cookieData[k];
+				})();					
+			},
+			setLocalCookie: function(k, v, t, domain) {
+				typeof win.localStorage !== "undefined"? localStorage.setItem(k, v) : (function() {
+					t = t || 30*24*60*60;
+					domain = domain? domain : ".hcbaidu.com"; //对hcbaidu下的二级域名都可以访问到
+					// domain对指定的域的子域共享该cookie，path为/本域名下的contextPath都能访问该cookie
+					doc.cookie = k + "=" + v + ";max-age=" + t +"domain=" + domain + "path=/";
+				})();
+			},
+			clearLocalCookie: function(k) {
+				typeof win.localStorage !== "undefined"? localStorage.removeItem(k) : (function() {
+					doc.cookie = k + "=Temp" + ";max-age=0";
+				})();
+			},
+			init: function() {
+				this.bindEvent();
+			},
+			bindEvent: function() {
+				var _this = this;  //监听事件里的this指向iframe,保存this用于指向其它方法
+				win.addEventListener("message", function(e) {
+					if (e.source !== win.parent) {return}; //判断是否是同一个iframe,e.source发送消息的窗口对象
+					var options = JSON.parse(e.data); //将JSON数据转换成js对象
+					//读取数据
+					if (options.type == "GET") {
+						var data = _this.getLocalCookie(options.key);
+						win.parent.postMessage(data, "*");  //返回获取的数据
+					}
+					//写入数据
+					options.type == "SET" && _this.setLocalCookie(options.key, options.value);
+					//删除数据
+					options.type == "DEL" && _this.clearLocalCookie(options.key);
+
+				}, false)
+			}
+		};
+		var tools = new fn;
+		tools.init();
+	})(window, document);  //传入函数提高函数访问全局变量时的速度
+
+	window.onload = function() {
+		var twoBoys = [
+		{MrLi: "id1"},
+		{MeWan: "id2"}
+		];
+		twoBoys = JSON.stringify(twoBoys); //localStorage、cookie都不能存储js对象，直接转换成json对象存储
+		document.cookie = "second=" + twoBoys + ";max-age=60;path=/";
+		window.localStorage.setItem("first", twoBoys);
+		console.log(document.cookie);
+	}
+/*
+写
+iframe.contentWindow.postMessage(JSON.stringify({type:"SET",key:"key",value:"value"}),'http://www.访问域名.com');
+读
+iframe.contentWindow.postMessage(JSON.stringify({type:"GET",key:"key"}),'http://www.访问域名.com');
+删
+iframe.contentWindow.postMessage(JSON.stringify({type:"REM",key:"key"}),'http://www.访问域名.com');
+*/
+</script>
+</body>
+</html>

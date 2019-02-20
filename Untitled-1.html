@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8">
+	<!-- <meta http-equiv="Refresh" content="2" />  自动刷新时间 2秒 -->
+	<title>The shape of viocce</title>
+	<link rel="stylesheet" type="text/css" href="loop.css">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<!-- <script src="vue.min.js"></script> -->
+	<script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+
+	<style type="text/css">
+		a:link {
+			/*未访问的链接*/
+			color: black;
+		}
+
+		a:visited {
+			color: black;
+		}
+
+		a:hover {
+			color: lightblue;
+		}
+
+		a:active {
+			/*点击时*/
+			color: lightblue;
+		}
+
+		a:focus {
+			outline: none;
+		}
+
+		.navbar {
+			list-style-type: none;
+			border: 0px;
+		}
+
+		.navbar li {
+			display: inline-block;
+			/*li元素设置成行排序*/
+			width: 50px;
+			height: 45px;
+			overflow: hidden;
+			border-bottom: 3px solid lightblue;
+			vertical-align: middle;
+		}
+
+		a {
+			text-decoration: none;
+			margin: 0px;
+			padding: 0px;
+		}
+	</style>
+
+	<script>
+		var rotate = new Array('rotate1', 'rotate1', 'rotate2');
+		$(document).ready(function() {
+			$("#audio_btn").click(function() {
+				var i = 1;
+				i += i;
+				if (i > 1) {
+					$(this).addClass("rotate1");
+				} else if (i == 2) {
+					$(this).removeClass('rotate1');
+				}
+
+				console.log(i);
+			})
+		})
+
+
+		var a = new Array(12, 27, 32, 40, 51)
+		for (var i = 0; i < a.length; i++) {
+			for (var j = i + 1; j <= a.length; j++) {
+				if (a[i] < a[j]) {
+					n = a[i];
+					a[i] = a[j];
+					a[j] = n;
+				}
+			}
+		}
+		console.log(a);
+
+		var c = 0;
+		var b = 5;
+		c < b ? console.log('c小于b') : alert('你好');
+
+		c = c || "条件不成立";
+		console.log(c);
+
+		function fnError() {
+			throw new Error('错误也可以自定义');
+		}
+
+		function mytry() {
+			try { //放入可能会出错的代码
+				fnError();
+			} catch (e) { //当出错的时候就执行，否则不执行
+				console.log(e)
+			} finally { //无论如何都会执行
+				console.log('我一直都在呢');
+			}
+		}
+
+		if (true) {
+			mytry();
+		}
+		//这是json对象写法
+		var obj = {
+			name: 'nico',
+			sex: 'man',
+			sayHellow: function() {
+				console.log('hellow woeld');
+			}
+		}
+		obj.sayHellow();
+		console.log(obj.name);
+		obj['sayHellow'](); //关联数组，看起来当数组使用
+		//js中一般开头字母大写的就是构造函数or对象
+		//js写法
+		var ect = function() {
+			this.age = 18;
+			this.name = 'jhon';
+			this.hellow = function() {
+				console.log('你好，世界');
+			}
+		}
+		var ec = new ect;
+		console.log(ec.age)
+		ec.hellow();
+
+		//传参类型
+		var date = function(day, month, year, scores, ) {
+			this.day = day;
+			this.month = month;
+			this.year = year;
+			this.scores = scores;
+		}
+		var p = new date(27, 7, 2017, {
+			chinaese: 90,
+			english: 98,
+			math: 66
+		})
+		console.log(p.year + '-' + p.month + '-' + p.day + '  chinaese:' + p.scores.chinaese + '  english:' + p.scores.english + '  math:' + p.scores.math);
+		//传参求和
+		var arr = new Array(1, 2, 3, 4, 5)
+		var fn = function(arr, n) {
+			for (var i = 0; i < arr.length; i++) {
+				n(arr[i]);
+			}
+		}
+		var sum = 0;
+		fn(arr, function(v) {
+			sum += v;
+		})
+		console.log(sum);
+
+
+		//jQuery
+		// 使JQuery失去对$符号的所有权
+		// $.noConflict();
+
+		// 自定义变量代替$符号
+		// var jj = $.noConflict();
+
+		// 将$符号作为变量传递给ready方法
+		// $.noConflict();
+		// jQuery(document).ready(function( $ ){
+		// 	var l = $('li');
+		// 	$('li').click(function(){
+		// 	console.log( l[0].firstChild.nodeValue )
+		// 	})
+		// })
+
+		$(document).ready(function() {
+			$('#one').click(function() {
+				$('.nav ,.nav3').css("background", "#ffbbaa")
+				// alert( $('.center').eq(0) )
+				$('.navbar').children('ul li ').css('background', '#aaccbb')
+				$('.center').nextAll('p').css('background', '#ccaabb')
+				$(' p + label ').css('background', 'violet')
+			})
+			$('#two').click(function() {
+				$('.nav').css("background", "none")
+				$('ul li').css('background', 'none')
+			})
+			$('#three').click(function() {
+				$('.center').eq(0).css('background', '#ffccdd')
+				// alert( $('.center').eq(0) )
+			})
+			$('#four').click(function() {
+				$('.center').eq(0).css('background', 'none')
+			})
+		})
+	</script>
+
+
+</head>
+
+<body>
+
+	<!-- Vue -->
+	<script>
+		window.onload = function() {
+			new Vue({
+				el: '#app',
+				data: {
+					message: 'Hello Vue.js!'
+				}
+			})
+		}
+	</script>
+
+
+	<div style="margin: 20px auto; width: 200px;" id="app">
+		<p>{{ message }}</p>
+		<input v-model="message">
+	</div>
+
+	<h1 style="margin: 0 auto; width: 200px;">Loading...</h1>
+
+	<div class="bar">
+		<ul class="menu">
+			<li> 首页
+				<ul class="sub-menu">
+					<li>知</li>
+					<li>者</li>
+					<li>不</li>
+					<li>言</li>
+				</ul>
+			</li>
+			<li> 抒情
+				<ul class="sub-menu">
+					<li>溪水</li>
+					<li>小河</li>
+					<li>大山</li>
+					<li>黄河</li>
+				</ul>
+			</li>
+			<li> KTV必唱
+				<ul class="sub-menu">
+					<li>爱你一万年</li>
+					<li>不见不散</li>
+					<li>长长久久</li>
+					<li>我是真的爱上你</li>
+				</ul>
+			</li>
+			<li> 老歌
+				<ul class="sub-menu">
+					<li>光辉岁月</li>
+					<li>傻女</li>
+					<li>红日</li>
+					<li>千千阙歌</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div id="audio_btn" class="rotate">
+		<img src="rolling.gif" width="120" height="120" id="media" style="position:absolute;" />
+	</div>
+
+	<div class="nav">
+		<ul id="parent-list" class="navbar">
+			<li id="post-1"><a href="">item 1我们可以</a></li>
+			<li id="post-2"><a href="">item 2</a></li>
+			<li id="post-3">item 3</li>
+			<li id="post-4">item 4</li>
+			<li id="post-5">item 5</li>
+			<li id="post-6">item 6</li>
+		</ul>
+	</div>
+	<div class="nav2">
+		<span class="span">
+加油，你是最棒的！
+加油，你是最棒的！
+加油，你是最棒的！
+</span>
+		<div class="nav3  ">
+			<img class="img" src="nico_05.jpg"> 余告之曰： “其形也， 翩若惊鸿， 婉若游龙。 荣曜秋菊， 华茂春松。 仿佛兮若轻云之蔽月， 飘摇兮若流风之回雪。 远而望之， 皎若太阳升朝霞； 迫而察之， 灼若芙蕖出渌波。 秾纤得衷， 修短合度。 肩若削成， 腰如约素。 延颈秀项， 皓质呈露。 芳泽无加， 铅华弗御。 云髻峨峨， 修眉联娟。 丹唇外朗， 皓齿内鲜， 明眸善睐， 靥辅承权。 瑰姿艳逸， 仪静体闲。 柔情绰态， 媚于语言。 奇服旷世， 骨像应图。 披罗衣之璀粲兮，
+			珥瑶碧之华琚。 戴金翠之首饰， 缀明珠以耀躯。 践远游之文履， 曳雾绡之轻裾。 微幽兰之芳蔼兮， 步踟蹰于山隅。
+		</div>
+	</div>
+
+	<div class="center">
+		<ul>
+			<li><button id="one">开启</button> <button id="two">关闭</button></li>
+			<li><button id="three">开启 </button> <button id="four">关闭</button></li>
+		</ul>
+	</div>
+
+	<form autocomplete="on">
+		<div class="nav">
+			<p>第一个</p>
+			<p>第一个</p>
+			<p>第一个</p>
+			<p>第一个</p>
+			<!-- for用来和指定的元素绑定 -->
+			<label for="Name">YourName: </label>
+			<input type="radio" name="Name" id="Name">
+			<br />
+			<label for="b">Date: </label>
+			<input type="radio" name="b" id="c">
+		</div>
+	</form>
+	<!-- 不使用border来绘制1px的线 ，在不同的浏览器下保持一致的效果
+ -->
+	<div style=" background: red; height: 1px; overflow: hidden; margin: 20px 0 "> </div>
+	<div style=" border: 1px solid green;  margin: 20px 0 "></div>
+
+	<div style="position: relative;">
+		<img class="floatmid" style="float: left;" src="nico_07.jpg">
+		<div class="abmid" style="color: pink">
+			whrer are you now ?
+			<img src="nico_06.jpg" style="width: 150px;">
+		</div>
+	</div>
+
+	<div id="demo"></div>
+
+
+	<div class="up"></div>
+	<div class="main">
+		<div class="left"></div>
+		<div class="right"></div>
+	</div>
+
+
+
+
+	<script type="text/javascript">
+		document.getElementById('parent-list').addEventListener("click", function(e) {
+			if (e.target && e.target.nodeName == "LI") { //nodeName根据节点类型返回其节点名称，target标签
+				console.log("List item", e.target.id.replace("id", "post-"), "was clicked!");
+			} //替换target的id名为post-
+		});
+	</script>
+	<div class="af">
+		<table width="884" height="416" border="0">
+			<tr>
+				<td width="391" height="160"><img src="nico_01.jpg" width="334" height="156" usemap="#Map2" border="0" /></td>
+				<td width="404">&nbsp;</td>
+				<td width="75">&nbsp;</td>
+			</tr>
+			<tr>
+				<td><img src="nico_04.jpg" width="338" height="180" /></td>
+				<td><img src="nico_02.jpg" width="404" height="207" usemap="#Map" border="0" /></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+
+		<map name="Map" id="Map">
+  <area shape="poly" coords="270,161" href="#" />
+
+  <area shape="poly" coords="348,203" href="#" />
+<area shape="poly" hidefocus="true" onfocus="this.blur()" 	border="0" coords="245,144,310,157,360,204,244,207" href="nico.html" /></map>
+
+		<map name="Map2" id="Map2">
+  <area shape="poly" coords="309,94" href="#" />
+</map>
+	</div>
+
+</body>
+
+</html>

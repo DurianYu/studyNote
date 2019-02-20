@@ -1,0 +1,59 @@
+  /* 直接在需要的元素上添加动画，从display：none到display：block的时候就会触发动画 */
+  /*缩放-从大到小*/
+  .zoom {
+		animation: zoom .3s ease-in-out;
+	}
+	@keyframes zoom {
+		from {
+			transform: scale(1.2);
+		}
+		to {
+			transform: scale(1);
+		}
+	}
+
+  /* 左右摇晃 */
+  .rock {
+    animation: rock .3s ease-in-out;
+  }
+
+  @keyframes rock {
+    0% {
+      transform: skew(12deg);
+      transform-origin: 50% 100%;
+    }
+    50% {
+      transform: skew(-8deg);
+      transform-origin: 50% 100%;
+    }
+    100% {
+      transform: skew(5deg);
+      transform-origin: 50% 100%;
+    }
+  }
+
+  /* 淡入淡出 */
+  /* method one
+
+  直接在需要的元素上添加下列属性，淡入时 add fadeIn 淡出时 remove fadeIn
+  opacity: 0;
+  transition: all .3s ease-in-out;
+  .fadeIn {
+    opacity: 1;
+  }
+
+  */
+
+  /* method two */
+  .fadeIn {
+    animation: fadeIn .3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

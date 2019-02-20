@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>---发送方---</title>
+</head>
+<body>
+    <div style="width:400px; margin: 20px 0;border:solid 1px #333;">
+        <span>我想要去主域获取数据</span>
+    </div>
+
+    <div id="myData" style="width:400px; margin: 20px 0;border:solid 1px #333;">
+        <span>我获取到的数据是：</span>
+        <span></span>
+    </div>
+
+    <div>
+        <iframe src="http://127.0.0.1:80/upload.html" width="600px"></iframe>
+    </div>  
+
+    <script type="text/javascript">
+        window.onload = function() {
+            // window.frames[0].postMessage()
+            // var dd = document.getElementsByTagName('iframe')[0];
+            // window.frames[0] == dd.contentWindow
+
+            // 发送消息的对象iframe
+            window.frames[0].postMessage(JSON.stringify({type:"GET", key:"first"}), "http://127.0.0.1:80/");
+            //接受跨域消息
+            window.addEventListener("message", function(e) {
+                var myData = document.getElementById('myData');
+                var sp = myData.getElementsByTagName('span')[1];
+                var data = JSON.parse(e.data);
+                sp.innerHTML = data[1].MeWan;
+            }, false)
+        };
+    </script>
+</body>
+</html>

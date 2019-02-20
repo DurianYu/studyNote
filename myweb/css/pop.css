@@ -1,0 +1,175 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*定义动画内容*/
+@keyframes fade-in {
+  0% { opacity: 0; }
+  20% { opacity: 0.2; }
+  40% { opacity: 0.4; }
+  60% { opacity: 0.6; }
+  80% { opacity: 0.8; }
+  100% { opacity: 1 }
+}
+
+.fadein {
+  /*动画名称*/
+  animation: fade-in;
+  /*动画持续时间*/
+  -webkit-animation-duration: 0.3s;
+  -o-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+}
+
+.pop-input:focus {
+  border-color: lightblue;
+}
+
+.pop-input:hover {
+  border-color: lightblue;
+  opacity: 0.6;
+}
+
+.pop-input {
+  border-radius: 15px;
+  outline: none;
+  border: 2px solid lightgray;
+  position: relative;
+  width: 215px;
+  height: 25px;
+  padding: 0 0 0 10px;
+}
+
+.pop-input:focus {
+  border-radius: 15px;
+}
+
+.pop-login-user {
+  position: relative;
+  width: 390px;
+  height: 80px;
+}
+
+.pop-headline {
+  position: relative;
+  height: 35px;
+  width: ;
+  top: 0;
+  color: gray;
+}
+
+.pop-login-info {
+  position: absolute;
+  width: 390px;
+  height: 115px;
+  margin: 15px 15px 0 15px;
+}
+
+.btn_font {
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  display: inline-block;
+}
+
+.button_login:hover {
+  opacity: 0.9;
+}
+
+.button_login {
+  width: 100%;
+  height: 100%;
+  border-radius: 0 0 15px 15px;
+  color: white;
+  background-color: #4caf50;
+  left: 0;
+}
+
+.popFooter {
+  width: 420px;
+  height: 40px;
+}
+
+.popContent {
+  position: relative;
+  width: 420px;
+  height: 130px;
+  margin: 0px 0px 0px 0px;
+}
+
+.pop-bar-header {
+  position: relative;
+  height: 40px;
+  border: none;
+}
+
+.pop-bar-title {
+  position: absolute;
+  left: 15px;
+  padding: 9px 28px;
+  background-color: #f5f;
+  border-radius: 0 0 15px 15px;
+  color: #fff;
+}
+
+.button-x {
+  text-align: center;
+  float: right;
+  padding: 9px 28px;
+  border-radius: 0 15px 0 15px;
+}
+
+.button-x:link {
+  color: gray;
+}
+
+.button-x:visited {
+  color: gray;
+}
+
+.button-x:hover {
+  background-color: #f5f;
+  color: white;
+}
+
+.pop {
+  /*生成绝对定位的元素，相对于浏览器进行定位*/
+  position: fixed;
+  display: none;
+  width: 420px;
+  height: 210px;
+  background-color: #edf;
+  left: 50%;
+  margin-left: -210px;
+  top: 50%;
+  margin-top: -120px;
+  /*-webkit-tap-highlight-color: rgba(0, 0, 0, 0);*/
+  border-radius: 15px;
+}
+
+.lower_screen {
+  display: none;
+  position: fixed;
+  /*ie不支持rgba，为了兼容所写*/
+  background-color: rgb(0, 0, 0);
+  filter: alpha(opacity=40);
+  /*主流浏览器*/
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}

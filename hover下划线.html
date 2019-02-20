@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>underline</title>
+	<style type="text/css">
+
+		li {
+			list-style-type: none;
+			display: inline-block;
+			font-size: 24px;
+			padding: 5px 5px;
+			position: relative;
+
+		}
+
+		li::before {
+			content: "";
+			position: absolute;
+			border-bottom: solid 2px red;
+			width: 0;
+			height: 100%;
+			left: 100%;
+			bottom: 0;
+			transition: all .2s;
+		}
+
+		li:hover::before {
+			width: 100%;
+			left: 0;
+			bottom: 0;
+			border-bottom-color: #000;
+		}
+
+/*选择 li:hover之后的每一个 li::before元素*/
+		li:hover ~ li::before {
+			left: 0;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li>阿斯顿</li>
+		<li>大神</li>
+		<li>趣味</li>
+		<li>而且</li>
+		<li>自行车</li>
+		<li>出现在</li>
+		<li>微信</li>
+	</ul>
+</body>
+</html>

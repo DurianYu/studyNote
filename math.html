@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>---math---</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.four {
+			float: left;
+			width: 50px;
+			height: 50px;
+			background: #f09;
+		}
+
+		.three {
+			width: 400px;
+			height: 200px;
+			background: pink;
+			float: left;
+		}
+
+		.box p {
+			margin: 20px 0;
+			background: skyblue;
+		}
+
+		.two {
+			float: left;
+		}
+
+		.one {
+			background: #09f;
+			width: 200px;
+			overflow: hidden;
+		}
+
+		.on {
+			width: 220px;
+			border: 2px solid #f09;
+			color: #09f;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="menu">
+
+	</div>
+
+	<!-- 浮动问题 -->
+	<div class="one">
+		<div class="two">我是浮动君</div>
+	</div>
+
+	<!-- margin覆盖问题 -->
+	<div class="box">
+		<p>-------</p>
+		<div style="overflow: hidden;">
+			<p>-------</p>
+		</div>
+		<p>-------</p>
+	</div>
+
+	<!-- float覆盖底层问题 -->
+	<div class="three"></div>
+	<div class="four"></div>
+	<ul>
+		<li style="display: none;">1
+			<div>我</div>
+		</li>
+		<li></li>
+		<li>3</li>
+		<li name="real_four">real_four</li>
+	</ul>
+	<input class="pdq" type="text" name="">输入框
+	<button class="dds">获取输入值</button>
+
+	<div id="app">
+		<input type="text" v-model="text">{{ text }}
+	</div>
+
+	<ul id="myList2">
+		<li>Water</li>
+		<li>Milk</li>
+	</ul>
+
+
+
+	<table id="ees">
+		<thead>我是head</thead>
+		<tbody></tbody>
+	</table>
+
+
+	<div id="panel" style="background: #f09; width: 200px; height: 150px; margin: 0 auto;"></div>
+
+
+	<button id="cross">cross domain</button>
+
+	<script src="jquery-3.2.1.js"></script>
+	<script type="module">
+		// 以命名空间导入
+		import * as mymodule from './component.js';
+		console.log('mymodule', mymodule);
+		console.log('mymodule.isEmail', mymodule.isEmail);
+		console.log('mymodule.isPassword', mymodule.isPassword);
+
+		// 以原名导入
+		import {isEmail} from './component.js';
+
+		// 以别名导入多个
+		import {isEmail as email, isPassword, isPassword as ps} from './component.js';
+		let email_1 = '++88545*tt.x@q55.com';
+		let email_2 = '2233@qq.com';
+		console.log('isEmail(email_1)', isEmail(email_1));
+		console.log('email(email_2)', email(email_2));
+		console.log('isEmail', isEmail);
+		console.log('email', email);
+		console.log('isPassword', isPassword);
+		console.log('ps', ps);
+
+		// import {isEmail as email, isPassword, isPassword as ps, isString} from './component.js';
+		// console.log('isString', isString); // error，没有单独导出，是不生效的
+
+		// 只运行模块里的代码，而不导入任何值
+		import './component.js';
+
+		// 不填入导出模块的名字， 则使用的是默认导出: export default
+		import component from './component.js';
+		console.log('component', component);
+
+		// * as mycomponent会把export default 的内容一块导入进来
+		import myDefault, * as mycomponent from './component.js';
+		console.log('myDefault', myDefault);
+		console.log('mycomponent', mycomponent);
+		console.log('mycomponent === myDefault', mycomponent === myDefault);
+
+
+		// ES6 模块之中，顶层的this指向undefined，即不应该在顶层代码使用this。
+		console.log('this', this);
+		console.log('window', window);
+	</script>
+	<script type="text/javascript">
+		// doAsync()执行顺序如下:
+		// do it, asd, 3333, fast4444
+		function asyncExe() {
+	      return new Promise((resolve, reject) => {
+	        setTimeout(() => {
+	          console.log('do it');
+	          resolve('asd');
+	        }, 2000);
+	      });
+	    },
+	    async function doAsync() {
+	      let aa = await this.aa().then(res => {console.log(res); return '3333';}).then(res => {console.log(res); return 444;});
+	      console.log('fast' + aa);
+	    }
+
+
+		// 查找原型的时候，只找一级
+		let People = function (name) {
+			// new的时候this指向 new的左边, 此时this.下面的方法就变成了新对象的方法,可直接调用
+			console.log('this', this);
+			this.name = name ? name : '默认值';
+			// 对象方法
+			this.Print = function() {
+				console.log('我是', this.name);
+			}
+		}
+		// 类方法, 出现在pp的原型下的constructor, 所以该方法是构造函数所有
+		People.Run = function() {
+			// console.log(this) // 指向People函数
+			console.log('i can run', this.name); // 函数也是对象， 所以this.name是函数名：People
+		}
+		// 原型方法
+		People.prototype.Introduce = function() {
+			console.log('可以是使用this.name:', this.name)
+		};
+
+		let pp = new People();
+		pp.Print();
+		// pp.Run(); // is not a function
+		pp.Introduce();
+		// People.Print(); // is not a function
+		People.Run();
+		// People.Introduce(); // is not a function
+
+		People()
+
+
+
+
+		// 范围选择
+		let val = 5;
+		switch(true) {
+		  case (val > 3 && val <= 12):
+		    console.log(val);
+		    break;
+		  default:
+		    break;
+		}
+
+	
+		// 节流
+		function throttle(fn, threshold) {
+			console.log('我一直在刷新？');
+			let timeout;
+			let start = new Date;
+			threshold = threshold || 3000;
+			let first = true;
+			console.log('start:', start);
+			return function() {
+				let context = this,
+					args = arguments,
+					curr = new Date() - 0;
+				clearTimeout(timeout) //总是干掉事件回调
+				if (curr - start >= threshold) {
+					console.log("now", curr, curr - start) //注意这里相减的结果，都差不多是160左右
+					fn.apply(context, args) //只执行一部分方法，这些方法是在某个时间段内执行一次
+					start = curr;
+				} else {
+					//让方法在脱离事件后也能执行一次
+					timeout = setTimeout(function() {
+						fn.apply(context, args);
+					}, first ? 0 : threshold);
+					first = false;
+				}
+			}
+		}
+		var mousemove = throttle(function(e) {
+			console.log('相隔一段时间了？');
+			console.log(e.pageX, e.pageY);
+		});
+		// 绑定监听
+		document.querySelector("#panel").addEventListener('mousemove', mousemove);
+
+
+
+		// 防抖
+		function debounce(func, delay) {
+			var timeout;
+			return function(e) {
+				console.log("清除", timeout, e.target.value)
+				clearTimeout(timeout);
+				var context = this,
+					args = arguments;
+				console.log("新的", timeout, e.target.value)
+				timeout = setTimeout(function() {
+					console.log("----")
+					console.log(context);
+					func.apply(context, args);
+				}, delay);
+			};
+		};
+		var validate = debounce(function(e) {
+			console.log("change", e.target.value, new Date - 0)
+		}, 380);
+		// 绑定监听
+		document.querySelector("input").addEventListener('input', validate);
+
+
+
+
+		function callBackFn(res, method) {
+			console.log('成功回调');
+			console.log('res:', res);
+			$('.pdq').val(res.data[0]);
+		}
+
+		$.getJSON("http://127.0.0.1:80/jsonp.php?jsoncallback=?", '', (res) => {
+			console.log('Jquery方法请求成功');
+			console.log('res:', res);
+		});
+
+		$.ajax({
+			url: "http://127.0.0.1:80/jsonp.php",
+			method: 'GET',
+			dataType: 'jsonp',
+			async: false,
+			jsonp: 'jsoncallback',
+			// jsonpCallback: 'callBackFn',
+			success: (res) => {
+				console.log('jquery方法请求成功');
+				console.log('res:', res);
+			},
+			error: () => {
+
+			}
+		});
+
+		$('#cross').on('click', () => {
+			console.log('电路');
+			let script = document.createElement("SCRIPT");
+			script.src = "http://127.0.0.1:80/jsonp.php?jsoncallback=callBackFn";
+			document.body.appendChild(script);
+		});
+
+		let ppo = {
+			a: 2,
+			b: this.a * 2 // 无法实现
+		}
+		ppo.b = ppo.a * 2;
+		console.log("ppo", ppo);
+
+		$('#ees tbody').append(`<tr><td>放哪啊</td></tr>`);
+
+
+
+
+		// 双向绑定
+		function nodeToFragment(node, vm) {
+			console.log('node:', node);
+			let flag = document.createDocumentFragment();
+			let child;
+			while (child = node.firstChild) {
+				compile(child, vm);
+				flag.appendChild(child);
+			}
+			console.log('flag:', flag);
+			return flag;
+		}
+
+		function compile(node, vm) {
+			console.log('循环:node.nodeType', node.nodeType);
+			let reg = /\{\{(.+?)\}\}/;
+			// 节点类型为元素
+			if (node.nodeType === 1) {
+				let attr = node.attributes;
+				console.log('attr:', attr);
+				// 解析属性
+				for (let i = 0, len = attr.length; i < len; i++) {
+					console.log('循环attr.length');
+					if (attr[i].nodeName === 'v-model') {
+						console.log('属于v-model');
+						let name = attr[i].nodeValue; // 获取v-model绑定的属性名
+						node.addEventListener('input', (e) => {
+							vm[name] = e.target.value; // 赋值触发set，函数处理触发get
+						});
+						node.value = vm[name]; // vm[name], 读值的时候，会触发get方法！！！
+						console.log('vm[name]', vm[name]);
+						new Watcher(vm, node, name, 'input');
+					}
+				}
+			}
+			// 节点类型为text
+			if (node.nodeType === 3) {
+				if (reg.test(node.nodeValue)) {
+					console.log('花括号：', node.nodeValue);
+					let name = RegExp.$1.trim(); // 获取（）第一个匹配到的值
+					// node.nodeValue = vm.data[name];
+					// 生成订阅者
+					new Watcher(vm, node, name, 'text');
+					console.log(name)
+				}
+			}
+		}
+
+		function Watcher(vm, node, name, nodeType) {
+			console.log(this)
+			Dep.target = this;
+			this.name = name;
+			this.node = node;
+			this.vm = vm;
+			this.nodeType = nodeType;
+			this.update();
+			Dep.target = null;
+		}
+
+		Watcher.prototype = {
+			update: function() {
+				console.log('原型里的this', this);
+				this.get();
+				console.log('出发get回来了');
+				if (this.nodeType === 'text') {
+					console.log('text:', this.value);
+					this.node.nodeValue = this.value;
+				}
+				if (this.nodeType === 'input') {
+					console.log('input', this.value);
+					this.node.value = this.value;
+				}
+			},
+			get: function() {
+				console.log('来过get方法');
+				this.value = this.vm[this.name]; // this.vm[this.name]会触发相应属性的get
+			}
+		}
+
+		function defineReactive(obj, key, val) {
+			console.log(arguments);
+			console.log('obj1:', obj)
+			let dep = new Dep();
+			Object.defineProperty(obj, key, {
+				get: function() {
+					console.log('Dep.target', Dep.target)
+					// 添加订阅者watcher到主题对象Dep
+					if (Dep.target) {
+						dep.addSub(Dep.target);
+						console.log('添加了订阅者');
+					}
+					return val;
+				},
+				set: function(newVal) {
+					if (newVal === val) {
+						return
+					}
+					val = newVal;
+					console.log('val:', val);
+					dep.notify();
+				}
+			});
+		}
+
+		function observe(obj, vm) {
+			console.log(vm)
+			Object.keys(obj).forEach((key) => {
+				defineReactive(vm, key, obj[key]);
+			})
+		}
+
+		// 主题对象，负责通知和添加订阅者
+		function Dep() {
+			this.subs = [];
+			console.log(this)
+		}
+		Dep.prototype = {
+			addSub: function(sub) {
+				this.subs.push(sub);
+				console.log('this.subs:', this.subs);
+			},
+			notify: function() {
+				console.log(this)
+				this.subs.forEach((sub) => {
+					sub.update();
+				})
+			}
+		}
+
+
+		function Vue(options) {
+			console.log(this);
+			this.data = options.data;
+			let data = this.data;
+			observe(data, this);
+			let id = options.el;
+			let dom = nodeToFragment(document.getElementById(id), this);
+			// 编译完成后，将dom返回到app中
+			document.getElementById(id).appendChild(dom);
+		}
+
+		let vm = new Vue({
+			el: 'app',
+			data: {
+				text: 'hello world!'
+			}
+		});
+
+		console.log("vm:", vm);
+
+		// let obj1 = {};
+		// Object.defineProperty(obj1, 'hello', {
+		// 	get: (val) => {
+		// 		console.log('get:', val);
+		// 	},
+		// 	set: (val) => {
+		// 		console.log('set:', val);
+		// 		$('#a').val(val);
+		// 		$('#b').text(val);
+		// 	}
+		// });
+		// document.addEventListener('keyup', (e) => {
+		//   obj1.hello = e.key;
+		// });
+
+
+		$('li[name="real_four"]').on('click', () => {
+			window.location.hash = 'changeHash';
+		});
+
+		window.onhashchange = () => {
+			console.log('hash is changed');
+		};
+
+
+		Promise.resolve('first promise').then((data) => {
+			console.log('data:', data);
+			// return Promise.resolve('next promise')
+			// 实际上两种返回是一样的
+			return 'LoVe promise'
+		}).then((data) => {
+			console.log('data:', data);
+		})
+
+
+		let myDate = new Date();
+		console.log('myDate:', myDate);
+		console.log(myDate.getDay());
+		console.log(myDate.getMonth());
+
+		function addAddress(address) {
+			const id = String(Date.now());
+			console.log('id:', id);
+		}
+
+		addAddress('23@23qq.com');
+
+
+		let aaa = aa => 1;
+		console.log(typeof aaa);
+
+		class Test {
+			constructor(a, b) {
+				console.log('constructor:', constructor);
+			}
+		}
+
+		console.log('class Test:', a = new Test(1, 2));
+
+		var mycar = {
+			make: "Honda",
+			model: "Accord",
+			year: 1998
+		};
+		console.log("make" in mycar) // 返回true
+		console.log("model" in mycar) // 返回true
+		console.log('aa' in ['cc', 'vv', 'bb', 'aa']);
+		console.log(2 in [0, 1]);
+		console.log('typeof null:', typeof null);
+		let target1 = {
+			age: 18,
+			name: 'Niko Bellic'
+		};
+		let handlers = {
+			get(target, property) {
+				console.log('property:', property);
+				return `${property}: ${target[property]}`
+			},
+			set(target, property, value) {
+				target[property] = value
+			}
+		};
+		let proxy = new Proxy(target1, handlers);
+		console.log('proxy:', proxy);
+		proxy.age = 19;
+		console.log(target1.age, proxy.age); // 19,          age : 19
+		console.log(target1.name, proxy.name); // Niko Bellic, name: Niko Bellic
+
+		let obj = {
+			_age: 97,
+			get age() {
+				return `My age is ${this._age}`;
+			},
+			set age(v) {
+				this._age = Number(v);
+			}
+		};
+		console.log('obj:', obj.age);
+		obj.age = 18;
+		console.log('obj:', obj.age);
+
+		let radian = Math.PI / 180 * 30;
+		$('.four').css({
+			transform: `matrix(${Math.cos(radian)}, ${Math.sin(radian)}, -${Math.sin(radian)}, ${Math.cos(radian)}, 0, 0)`,
+			background: 'violet'
+		});
+
+		let tt = [];
+		console.log(tt.push(true))
+		console.log($('ul li[display="visible"]'));
+
+		$('.dds').on('click', () => {
+			console.log('输入的值:', $('.pdq').val())
+		});
+		let xArr = [1, 0, -8, 9, 22, 0];
+		let yArr = [0, -20, 11, -6, 0];
+		let zArr = [];
+		console.log(yArr.map((v, i) => {
+			if (v === 0) {
+				v = 2233
+			}
+			return v;
+		}));
+		console.log('yArr', yArr)
+		// console.log(yArr.toString().replace(',0', '2233'));
+		zArr = xArr.concat(yArr);
+		let sss = xArr.filter((v, i) => {
+			return v > 0;
+		})
+		console.log('sss:', sss);
+		zArr.push(xArr);
+		zArr.push(yArr);
+		console.log('zArr:', zArr)
+		console.log('max:', Math.max.apply(Math, xArr));
+		console.log('min:', Math.min.apply(Math, xArr));
+		let zzx = [];
+		for (let i = 0; i < zzx.length; i++) {
+			zzx[0] = zzx['zzx'];
+		}
+		console.log('zzx', zzx);
+		var foo = {};
+		for (var i = 0; i < 100; i++) {
+			foo['longprefix' + i] = i;
+		}
+		console.log('foo', foo);
+		foo.longprefix90 = 'abc';
+		$('ul').on('click', '.dd', (e) => {
+			console.log(e);
+			// 未创建的元素也可以当作监听的父级
+			console.log(e.currentTarget);
+		});
+		$('ul').append(`<li>5</li><li>6</li>
+			<li class="aa">7
+				<div>66</div>
+			</li>
+			<li class="cc">007
+				<div>007
+					<span>span
+						<p class="dd">998</p>
+					</span>
+				</div>
+			</li>`);
+
+		console.log($('ul li').eq(-2).text());
+		console.log($('ul li').eq(-1).text());
+		let qq = {
+			a: 1,
+			b: 2
+		};
+		qq = {
+			a: 3
+		}
+		console.log(qq)
+		let qwe = null;
+		console.log('qwe', !!qwe);
+		let b_c = 'pre';
+		// let pre_d = "我是手动定义的";
+		window[`${b_c}_d`] = '变量声明变量';
+		console.log('pre_d', pre_d);
+		console.log('通过window[]声明的变量', `${window[`${b_c}_d`]}`);
+		(() => {
+			if (3 > 0) {
+				return console.log(2223);
+				console.log(4455);
+			}
+		})();
+
+
+		console.log(3 > 1 ? true : 2);
+		$('ul').children('li').eq(0).data('info', '111');
+		$('ul').children('li').eq(1).data('info', '222');
+
+		console.log($('ul').children('li').eq(0).data('info'));
+		console.log($('ul').children('li').eq(1).data('info'))
+
+		let cc = 555666;
+		console.log(cc.toString().slice(-2, -1));
+		// $('ul li').eq(0).data(element, key, element)
+		// $('ul ').on('click', (e) => {
+		// 	console.log(e)
+		// 	$(e.target).fadeOut();
+		// });
+		let aa = 123;
+		$.ajax({
+			url: 'dome.html',
+			type: 'get',
+			dataType: 'json',
+			data: {
+
+			},
+			success: () => {
+
+			},
+			error: () => {
+				console.log('error');
+				console.log('值都进来了', aa);
+			}
+		});
+		window.onload = function() {
+			let aa = $('ul li');
+			for (index of aa) {
+				if ($(index).text() === '') {
+					console.log($(index).html('该同学没有值哦'))
+				}
+			}
+			var list = [{
+					num: 1,
+					id: 3
+				},
+				{
+					num: 2,
+					id: 4
+				},
+				{
+					num: 3,
+					id: 5
+				}
+			]
+
+			console.log("1到100的和是: " + count(100));
+			//循环1到100的合，加法结合律，100+1 === 99+2 === 98+3,一共50组，得(x+1)*(x/2)
+			function count(x) {
+				return (x + 1) * (x / 2);
+			}
+
+			//绑定数据到html
+			var menu = document.getElementsByTagName('div')[0];
+			var menuUl = document.createElement('ul');
+			for (var i = 0, len = list.length; i < len; i++) {
+				menuUl.innerHTML += "<li>" + list[i].num + "</li>";
+			}
+			menu.appendChild(menuUl);
+
+			//添加事件监听,实现 监听版本选项卡
+			menuLi = menu.getElementsByTagName('li');
+			menu.addEventListener("click", changeBg);
+			//改变背景颜色
+			function changeBg(x) {
+				console.log(x); //MouseEvent对象
+				console.log(this); //当前监听对象 menu
+				console.log(this.querySelectorAll('li')); //获取menu下的所拥有li节点
+				console.log(menuLi);
+				console.log(x.target.classList.contains('on')); //contains检测类名是否存在，返回boolen值
+
+
+				//遍历 初始化属性
+				for (var i = 0, len = menuLi.length; i < len; i++) {
+					end.call(menuLi[i]);
+				}
+				//判断是否是li标签
+				if (x.target.nodeName === "LI") {
+					x.target.classList.add('on'); //classList.toggle('类名') 切换功能
+				}
+			}
+
+			//重置、结束
+			function end() {
+				this.classList.remove('on');
+			}
+
+			//.call用法
+			function Product(name, price) {
+				this.name = name;
+				this.price = price;
+				// console.log(window.name);
+				if (price < 0) {
+					throw RangeError('Cannot create product ' +
+						this.name + ' with a negative price');
+				}
+			}
+
+			function Food(name, price) {
+				Product.call(this, name, price);
+				this.category = 'food';
+				// console.log(window.category); //Undefined 函数内部的 外面引用不到
+			}
+			var fruit = new Food("ice", 25); //fruit类型是 对象object
+			console.log(fruit.name);
+
+			// var cheese = new Food('feta', 5);
+			// cheese("z",4);
+			//等同于
+			// function Food(name, price) {
+			//     this.name = name;
+			//     this.price = price;
+			//     if (price < 0) {
+			//         throw RangeError('Cannot create product ' +
+			//                 this.name + ' with a negative price');
+			//     }
+
+			//     this.category = 'food';
+			// }
+
+			function Toy(name, price) {
+				Product.call(this, name, price);
+				this.category = 'toy';
+			}
+			// console.log(window.category); 	//运行哪个函数则对应其定义的this.category
+
+			//call调用匿名函数
+			//内存回收机制，此处的变量只在函数运行期间有用
+			var animals = [{
+					species: 'Lion',
+					name: 'King'
+				},
+				{
+					species: 'Whale',
+					name: 'Fail'
+				}
+			];
+
+			for (let i = 0, len = animals.length; i < len; i++) {
+				(function(i) {
+					this.print = function() {
+						console.log('#' + i + ' ' + this.species + ': ' + this.name); //this === animals[i]
+					}
+					this.print();
+				}).call(animals[i], i); //替换了this为animals[i]
+			}
+
+			//call调用函数并且指定上下文的'this'
+			function greet() {
+				console.log(this)
+				var reply = [this.person, 'Is An Awesome', this.role].join(" "); //join把数组拼接为一个字符串,参数作为分隔符
+				console.log(reply);
+			}
+
+			var i = {
+				person: 'Douglas Crockford',
+				role: 'Javascript Developer'
+			};
+
+			var info = {
+				person: 'JackJohn'
+			};
+
+			greet.call(i); // ThisArg若填null和this和undefined都是指向window
+
+
+
+
+
+
+
+		}
+	</script>
+</body>
+
+</html>

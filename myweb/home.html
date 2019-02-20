@@ -1,0 +1,610 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=980px, height=device-height initial-scale=1.0">
+  <title>乐趣的发源地</title>
+  <link rel="shortcut icon" href="images/favicon.png">
+  <link rel="stylesheet" href="css/pop.css">
+  <link rel="stylesheet" href="css/top-nav.css">
+  <link rel="stylesheet" href="css/center.css">
+  <style type="text/css">
+    * {
+      font-family: "Microsoft YaHei";
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <div class="top-img" style="background-image:url(images/background.png);">
+      <div class="top-img-container">
+        <div class="top-bar">
+          <ul class="top-bar-menu">
+            <li><a title="本站资源排行榜" style="color:#fff;" href="####">
+              <img class="align-img" style="height: 14px; margin-right:4px;" src="images\rank.ico" alt="rank">
+              <span>排行榜</span>
+            </a>
+            </li>
+            <li>收藏夹</li>
+            <li>观看历史</li>
+          </ul>
+        </div>
+        <div class="bottom-bar">
+          <a href="javascript:showPop();">
+            <div class="bar-login">
+              <span style="color:#fff; position:absolute; left:10px; top:5px; letter-spacing:2px;">
+                登陆
+              </span>
+            </div>
+          </a>
+          <div class="bar-search">
+            <form>
+              <input class="bar-search-input" type="text" placeholder="搜索从这里开始...">
+              <button class="bar-search-button" type="submit"></button>
+            </form>
+          </div>
+          <div class="bar">
+            <ul class="menu">
+              <li>
+                <a title="小站首页" href="home.html">
+                  <img class="align-img" src="images/home.ico" alt="首页">
+                </a>
+              </li>
+              <li>番剧
+                <ul class="sub-menu">
+                  <li>连载动画</li>
+                  <li>完结动画</li>
+                  <li>资讯</li>
+                  <li>官方延生</li>
+                  <li>新番时间表</li>
+                </ul>
+              </li>
+              <li>国创
+                <ul class="sub-menu">
+                  <li>国产动画</li>
+                  <li>国产原创相关</li>
+                  <li>布袋戏</li>
+                  <li>资讯</li>
+                  <li>新番时间表</li>
+                </ul>
+              </li>
+              <li>音乐
+                <ul class="sub-menu">
+                  <li>原创音乐</li>
+                  <li>翻唱</li>
+                  <li>演奏</li>
+                  <li>三次元音乐</li>
+                </ul>
+              </li>
+              <li>舞蹈
+                <ul class="sub-menu">
+                  <li>宅舞</li>
+                  <li>Hiphop</li>
+                  <li>Popping</li>
+                  <li>OldSchool</li>
+                  <li>舞蹈教程</li>
+                </ul>
+              </li>
+              <li>游戏
+                <ul class="sub-menu">
+                  <li>单机游戏</li>
+                  <li>手机游戏</li>
+                  <li>电子竞技</li>
+                  <li>网络游戏</li>
+                  <li>桌游棋牌</li>
+                </ul>
+              </li>
+              <li>科技
+                <ul class="sub-menu">
+                  <li>纪录片</li>
+                  <li>趣味科普人文</li>
+                  <li>野生技术协会</li>
+                  <li>演讲公开课</li>
+                  <li>单挑荒野</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="carousel-recommend-container">
+      <!-- 轮播图 -->
+      <div class="carousel-box" id="carousel-box">
+        <ul id="inner-box">
+          <li><img src="images/home_01.jpg" alt=""></li>
+          <li><img src="images/home_02.jpg" alt=""></li>
+          <li><img src="images/home_03.jpg" alt=""></li>
+          <li><img src="images/home_04.jpg" alt=""></li>
+          <li><img src="images/home_01.jpg" alt=""></li>
+        </ul>
+        <ol class="carousel-ol" id="carousel-ol">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol>
+        <!-- 左右切换按钮 -->
+        <div class="carousel-btn">
+          <span class="left" id="left">&lt;</span>
+          <span class="right" id="right">&gt;</span>
+        </div>
+      </div>
+      <!-- 推荐部分 -->
+      <div class="recommend">
+        <div class="recommend-module">
+          <a href="#" target="_blank" title="">
+          <img src="images\recommend_01.jpg" alt="">
+          <p class="recommend-module-title">这项拥有7000年历史的中国非遗，却被世界命名为“japan”</p>
+      </a>
+        </div>
+        <div class="recommend-module">
+          <a href="#" target="_blank" title="">
+          <img src="images\recommend_02.jpg" alt="">
+          <p class="recommend-module-title">对不起，老板！我又在办公室里炸了几根鸡腿，从此不去金拱门。</p>
+      </a>
+        </div>
+        <div class="recommend-module">
+          <a href="#" target="_blank" title="">
+          <img src="images\recommend_03.jpg" alt="">
+          <p class="recommend-module-title">【Speedpaint】SAI2十倍速万圣节贺图！Happy Halloween【#12】</p>
+      </a>
+        </div>
+        <div class="recommend-module">
+          <a href="#" target="_blank" title="">
+          <img src="images\recommend_04.jpg" alt="">
+          <p class="recommend-module-title">【日食记】酸菜鱼的滋味，我跟老姜都想了解（￣﹃￣</p>
+      </a>
+        </div>
+        <div class="recommend-module">
+          <a href="#" target="_blank" title="">
+          <img src="images\recommend_05.jpg" alt="">
+          <p class="recommend-module-title">【谜之声推荐】万花图案合集-有你想不到的奇思妙想</p>
+      </a>
+        </div>
+        <div class="recommend-module">
+          <a href="#" target="_blank" title="">
+          <img src="images\recommend_06.jpg" alt="">
+          <p class="recommend-module-title">10分钟看完“信长之野望”系列</p>
+      </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="area-header">
+      <h3>
+        <img src="images\areaheader_01.ico" class="area-header-img" alt="">
+        <b>精彩推荐</b>
+        <p class="area-header-text">万年的等候只为你的到来！</p>
+      </h3>
+    </div>
+
+    <!-- 推荐楼层盒子 -->
+    <div class="storey-box">
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+          <img src="images\four_recommend_01.jpg" alt="">
+          <p class="storey-box-text">爷爷奶奶第一次吃汉堡，还是咱家做的好吃</p>
+      </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+          <img src="images\four_recommend_02.gif" alt="">
+          <p class="storey-box-text">地球online 刀剑上的舞蹈</p>
+      </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+          <img src="images\four_recommend_03.jpg" alt="">
+          <p class="storey-box-text">哪个时候你希望有个人可以陪伴在你左右</p>
+      </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+          <img src="images\four_recommend_04.jpg" alt="">
+          <p class="storey-box-text">沙爆焖鸡，在他拿起鸡腿那一刻，我流口水了</p>
+      </a>
+      </div>
+
+      <div class="activity-box">
+        <a href="#">
+            <img src="images\activity.png" alt="">
+            <p class="activity-text">活动</p>
+          </a>
+      </div>
+    </div>
+
+    <div class="area-header">
+      <h3>
+        <img src="images\areaheader_02.ico" class="area-header-img" alt="">
+        <b>排行榜</b>
+        <p class="area-header-text">为什么这样排序呢？</p>
+        <div class="ranking-tab-nav">
+          <a id="day-rank" href="javascript:showdRank();">日榜</a>
+          <a id="week-rank" href="javascript:showwRank();">周榜</a>
+        </div>
+      </h3>
+    </div>
+
+    <!-- 文章栏 -->
+    <div class="article">
+      <div class="article-title">
+        <a href="#">
+          <h3>
+            <img style="width: 32px; height: 32px; margin: 0 5px 0 0; vertical-align: middle;" src="images\articleTitle.png" alt="">
+            <span>鸡汤美文</span>
+          </h3>
+        </a>
+      </div>
+
+      <div class="article-module">
+        <div class="article-module-tab" id="article-module-tab">
+          <a data-id="0" onmouseover="articleOver(this)" href="#">工作情感</a>
+          <a data-id="1" onmouseover="articleOver(this)" href="#">动漫文化</a>
+          <a data-id="2" onmouseover="articleOver(this)" href="#">风景旅途</a>
+          <a data-id="3" onmouseover="articleOver(this)" href="#">游戏</a>
+        </div>
+
+        <div class="article-module-cont" id="article-module-cont">
+          <div id="work" data-name="工作情感">
+            <ul>
+              <figure class="has-img">
+                <a title="" href="#">
+                  <img style="width: 90px; height: 50px; border-radius: 5px;" src="images\work.jpg" alt="">
+                  <span style="position:absolute; margin: 0 0 0 10px; overflow: hidden; height: 32px;">感觉生活没有希望......接下来的路该怎么走下去</span>
+                  <span style="position:absolute; bottom: 0; margin: 5px 0 0 10px;">作者：人生烟火</span>
+                </a>
+              </figure>
+              <li>
+                <a title="你们好，看施工图的我又回来了！
+作者：寒fei" href="#">你们好，看施工图的我又回来了！</a>
+              </li>
+              <li>
+                <a title="女朋友是富二代，而我自己条件普普通通
+作者：我感到一丝惶恐" href="#">女朋友是富二代，而我自己条件普普通通</a>
+              </li>
+              <li>
+                <a title="看完zz项目的经理我该怎么办
+作者：黑子丶Tetsuya " href="#">看完zz项目的经理我该怎么办</a>
+              </li>
+              <li>
+                <a title="几次失败的感情下来，我这种应该属于“很累，感觉不会再爱了 吧?”
+作者：万事初春" href="#">几次失败的感情下来，我这种应该属于“很累，感觉不会再爱了 吧?”</a>
+              </li>
+              <li>
+                <a title="超出爱情控制的闲鱼路肆意狂奔中
+作者：救赎" href="#">超出爱情控制的闲鱼路肆意狂奔中</a>
+              </li>
+              <li>
+                <a title="杂记：若不是真心，就不要浪费事件了
+作者：仙山撑雨伞" href="#">杂记：若不是真心，就不要浪费事件了</a>
+              </li>
+            </ul>
+          </div>
+
+          <div style="display:none;" id="anime" data-name="动漫文化">
+            <ul>
+              <figure class="has-img">
+                <a href="#">
+                  <img style="width: 90px; height: 50px; border-radius: 5px;" src="images\anime.jpg" alt="">
+                  <span style="position:absolute; margin: 0 0 0 10px; overflow: hidden; height: 32px;">从猪到羊！《十二大战》的声优们如何看待角色</span>
+                  <span style="position:absolute; bottom: 0; margin: 5px 0 0 10px;">作者：九折坂二人</span>
+                </a>
+              </figure>
+              <li>
+                <a title="向富坚看齐？《柯南》继续休刊四周
+作者：九折坂二人" href="#">向富坚看齐？《柯南》继续休刊四周</a>
+              </li>
+              <li>
+                <a title="少女与大叔的恋爱物语~TV动画「恋如雨止」PV公开，2018年1月开播！
+作者：可怜的小木头" href="#">少女与大叔的恋爱物语~TV动画「恋如雨止」PV公开，2018年1月开播！</a>
+              </li>
+              <li>
+                <a title="真人版《天才麻将少女 阿知贺篇》公布新视觉图
+作者：会计" href="#">真人版《天才麻将少女 阿知贺篇》公布新视觉图</a>
+              </li>
+              <li>
+                <a title="《东离剑游纪》外传最新预告公开 西川貴教加盟配音 吧?”
+作者：会计" href="#">《东离剑游纪》外传最新预告公开 西川貴教加盟配音 吧?”</a>
+              </li>
+              <li>
+                <a title="【新番季】2017年10月新番品尝报告
+作者：救赎" href="#">【新番季】2017年10月新番品尝报告</a>
+              </li>
+              <li>
+                <a title="本命在哪里？《魔法老师》3年A班人气投票结果公开
+作者：白鹅" href="#">本命在哪里？《魔法老师》3年A班人气投票结果公开</a>
+              </li>
+            </ul>
+          </div>
+
+          <div style="display: none;" id="novel" data-name="风景旅途">
+            <ul>
+              <figure class="has-img">
+                <a href="#">
+                  <img style="width: 90px; height: 50px; border-radius: 5px;" src="images\scenery.png" alt="">
+                  <span style="position:absolute; margin: 0 0 0 10px; overflow: hidden; height: 32px;">微凉三月，诗中的烟花细雨，穿林戏叶。</span>
+                  <span style="position:absolute; bottom: 0; margin: 5px 0 0 10px;">作者：唐诗三百</span>
+                </a>
+              </figure>
+              <li>
+                <a title="中国新一代的游戏人都来自哪里？
+作者：寒fei" href="#">中国新一代的游戏人都来自哪里？</a>
+              </li>
+              <li>
+                <a title="蓝翔设电竞学院：中国电竞哪家强
+作者：我感到一丝惶恐" href="#">蓝翔设电竞学院：中国电竞哪家强</a>
+              </li>
+              <li>
+                <a title="SKT教练称队员也是人，国外LOL网友：Faker不是，他是神
+作者：黑子丶Tetsuya " href="#">SKT教练称队员也是人，国外LOL网友：Faker不是，他是神</a>
+              </li>
+              <li>
+                <a title="《尼尔：机械纪元》制作人：游戏原计划是PC独占 吧?”
+作者：万事初春" href="#">《尼尔：机械纪元》制作人：游戏原计划是PC独占 吧?”</a>
+              </li>
+              <li>
+                <a title="《刀剑神域：虚空幻界》PC开卖获特别好评，中国玩家有独家优惠
+作者：救赎" href="#">《刀剑神域：虚空幻界》PC开卖获特别好评，中国玩家有独家优惠</a>
+              </li>
+              <li>
+                <a title="国人才是正版游戏主力！Steam简中用户量干翻老外
+作者：仙山撑雨伞" href="#">国人才是正版游戏主力！Steam简中用户量干翻老外</a>
+              </li>
+            </ul>
+          </div>
+          <div style="display: none;" id="games" data-name="游戏">
+            <ul>
+              <figure class="has-img">
+                <a href="#">
+                  <img style="width: 90px; height: 50px; border-radius: 5px;" src="images\games.png" alt="">
+                  <span style="position:absolute; margin: 0 0 0 10px; overflow: hidden; height: 32px;">任天堂已经卖了 763 万部 Switch，首年销量即将超越 Wii U 历史总销量</span>
+                  <span style="position:absolute; bottom: 0; margin: 5px 0 0 10px;">作者：软件狂者</span>
+                </a>
+              </figure>
+              <li>
+                <a title="你们好，看施工图的我又回来了！
+作者：寒fei" href="#">你们好，看施工图的我又回来了！</a>
+              </li>
+              <li>
+                <a title="女朋友是富二代，而我自己条件普普通通
+作者：我感到一丝惶恐" href="#">女朋友是富二代，而我自己条件普普通通</a>
+              </li>
+              <li>
+                <a title="看完zz项目的经理我该怎么办
+作者：黑子丶Tetsuya " href="#">看完zz项目的经理我该怎么办</a>
+              </li>
+              <li>
+                <a title="几次失败的感情下来，我这种应该属于“很累，感觉不会再爱了 吧?”
+作者：万事初春" href="#">几次失败的感情下来，我这种应该属于“很累，感觉不会再爱了 吧?”</a>
+              </li>
+              <li>
+                <a title="超出爱情控制的闲鱼路肆意狂奔中
+作者：救赎" href="#">超出爱情控制的闲鱼路肆意狂奔中</a>
+              </li>
+              <li>
+                <a title="杂记：若不是真心，就不要浪费事件了
+作者：仙山撑雨伞" href="#">杂记：若不是真心，就不要浪费事件了</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="article-module-footer">
+          <a href="#">查看更多&gt;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 排行榜部分 -->
+    <div class="ranking-box" id="ranking-box1">
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_01.jpg" alt="">
+        <p class="storey-box-text">NASA发布航拍地球延时短片，每一帧都美到心坎儿</p>
+        <span class="block-top">
+          <img style="padding: 0 0 3px 0; width: 16px; height: 16px; vertical-align: text-bottom;" src="images\crown1.png" alt="">
+          <b>1</b>
+        </span>
+    </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_02.jpg" alt="">
+        <p class="storey-box-text">没错 漂亮的不像实力派 阿米洛樱花键盘</p>
+        <span class="block-top">
+          <img style="padding: 0 0 3px 0; width: 16px; height: 16px; vertical-align: text-bottom;" src="images\crown2.png" alt="">
+          <b>2</b>
+        </span>
+    </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_03.jpg " alt="">
+        <p class="storey-box-text">暖到心坎里的软欧面包，治愈冬天所有坏脾气【曼食慢语】</p>
+        <span class="block-top">
+          <img style="padding: 0 0 3px 0; width: 16px; height: 16px; vertical-align: text-bottom;" src="images\crown3.png" alt="">
+          <b>3</b>
+        </span>
+    </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_04.jpg " alt="">
+        <p class="storey-box-text">西服是很帅，但是画不好西服的褶皱，那就难堪了！</p>
+        <span class="block-top">
+          <b>4</b>
+        </span>
+        </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_05.jpg" alt="">
+        <p class="storey-box-text">fate贞德5倍20倍速度绘制过程（插画师禾月）</p>
+        <span class="block-top">
+          <b>5</b>
+        </span>
+        </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_06.jpg" alt="">
+        <p class="storey-box-text">秋冬平价 护肤彩妆 购物&爱用分享，以及冲动购物踩雷吐槽！</p>
+        <span class="block-top">
+          <b>6</b>
+        </span>
+        </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_07.jpg" alt="">
+        <p class="storey-box-text">网购衣服，千万慎买的15个款式！</p>
+        <span class="block-top">
+          <b>7</b>
+        </span>
+        </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_08.jpg" alt="">
+        <p class="storey-box-text">43【怪异君毁经典2】《仙剑奇侠传》第四回</p>
+        <span class="block-top">
+          <b>8</b>
+        </span>
+        </a>
+      </div>
+    </div>
+
+
+    <div class="ranking-box" id="ranking-box2">
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_08.jpg" alt="">
+        <p class="storey-box-text">NASA发布航拍地球延时短片，每一帧都美到心坎儿</p>
+        <span class="block-top">
+          <img style="padding: 0 0 3px 0; width: 16px; height: 16px; vertical-align: text-bottom;" src="images\crown1.png" alt="">
+          <b>1</b>
+        </span>
+    </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_07.jpg" alt="">
+        <p class="storey-box-text">没错 漂亮的不像实力派 阿米洛樱花键盘</p>
+        <span class="block-top">
+          <img style="padding: 0 0 3px 0; width: 16px; height: 16px; vertical-align: text-bottom;" src="images\crown2.png" alt="">
+          <b>2</b>
+        </span>
+    </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_06.jpg" alt="">
+        <p class="storey-box-text">暖到心坎里的软欧面包，治愈冬天所有坏脾气【曼食慢语】</p>
+        <span class="block-top">
+          <img style="padding: 0 0 3px 0; width: 16px; height: 16px; vertical-align: text-bottom;" src="images\crown3.png" alt="">
+          <b>3</b>
+        </span>
+    </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_05.jpg" alt="">
+        <p class="storey-box-text">西服是很帅，但是画不好西服的褶皱，那就难堪了！</p>
+        <span class="block-top">
+          <b>4</b>
+        </span>
+        </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_04.jpg" alt="">
+        <p class="storey-box-text">fate贞德5倍20倍速度绘制过程（插画师禾月）</p>
+        <span class="block-top">
+          <b>5</b>
+        </span>
+        </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_03.jpg" alt="">
+        <p class="storey-box-text">秋冬平价 护肤彩妆 购物&爱用分享，以及冲动购物踩雷吐槽！</p>
+        <span class="block-top">
+          <b>6</b>
+        </span>
+        </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_02.jpg" alt="">
+        <p class="storey-box-text">网购衣服，千万慎买的15个款式！</p>
+        <span class="block-top">
+          <b>7</b>
+        </span>
+        </a>
+      </div>
+      <div class="storey-box-module">
+        <a href="#" target="_blank" title="">
+        <img src="images\top_01.jpg" alt="">
+        <p class="storey-box-text">43【怪异君毁经典2】《仙剑奇侠传》第四回</p>
+        <span class="block-top">
+          <b>8</b>
+        </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 排行榜广告 -->
+    <div class="ranking-ad">
+      <a href="#">
+        <img style="width: 980px; height: 120px; border-radius: 5px;" src="images\rankingAD.png" alt="">
+        <span class="activity-text">广告</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- 登陆窗口 -->
+  <div class="lower_screen fadein" id="lowerScreen">
+    <div class="pop" id="Pop">
+      <header class="pop-bar-header">
+        <div class="pop-title">
+          <span class="pop-bar-title">登陆</span>
+          <a href="javascript:closePop();" class="button-x">×</a>
+        </div>
+      </header>
+      <div class="popContent">
+        <div class="pop-login-info">
+          <div class="pop-headline">
+            欢迎来到此网站! 示例: 帐号:monkey密码:monkey123
+          </div>
+          <div class="pop-login-user">
+            <div style="position:relative; height: 40px;">
+              <!-- for和输入标签中的ID进行捆绑 -->
+              <label style="color:gray" for="username">您的帐号:
+              <!-- h5新标签，默认暗示 -->
+              <input class="pop-input" type="text" name="username" id="username" placeholder="请输入用户名...">
+              </label>
+            </div>
+            <div style="position:relative; height: 40px;">
+              <label style="color:gray" for="password">您的密码:</label>
+              <input class="pop-input" type="password" name="password" id="password" placeholder="请输入密码...">
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="popFooter">
+        <input type="button" name="btn_login" value="登陆" id="btn_login" class="button_login btn_font">
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

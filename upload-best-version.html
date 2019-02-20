@@ -1,0 +1,328 @@
+<template>
+    <div class="page uploadWxGroup" data-name="uploadWxGroup">
+        <div class="page-content">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="title">哲升</div>
+                </div>
+            </div>
+            <div class="row no-gap flex-x-center" style="padding-top: 2rem;">
+                <div class="col-80">
+                    <div class="uplaod-box card">
+                        <div class="card-content flex-x-center">
+                            <img id="preview-file" src="" alt="">
+                            <label id="sel-file-label" for="sel-file" class="flex-x-center flex-y-center">
+                                <div>
+                                    <div class="iconfont icon-add"></div>
+                                    <div style="width: 6rem; text-align: center; color: #777;">点击添加或替换图片</div>
+                                </div>
+                            </label>
+                            <input id="sel-file" type="file" accept="image/*" hidden>
+                        </div>
+                        <div class="card-footer">
+                            <div class="list inline-labels no-hairlines" style="width: -webkit-fill-available">
+                                <ul>
+                                    <li class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">省份</div>
+                                            <div class="item-input-wrap">
+                                                <input id="input-prvn" class="pointer" @click="openPrvn" type="text"
+                                                    placeholder="请选择.." readonly>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="item-content item-input">
+                                        <div class="item-inner">
+                                            <div class="item-title item-label">城市</div>
+                                            <div class="item-input-wrap">
+                                                <input id="input-city" class="pointer" @click="openCity" type="text"
+                                                    placeholder="请选择.." readonly>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row flex-x-center" style="padding-top: 2rem;">
+                <button class="col-30 button button-round button-fill " @click="commitAll">提交</button>
+            </div>
+            <div class="upload_bar dialog dialog-buttons-1 modal-in">
+                <div class="dialog-inner">
+                    <div class="progressbar" data-progress="0">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style scoped>
+    .translate-x-y-center {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+    }
+
+    .flex-x-center {
+        display: flex;
+        justify-content: center;
+    }
+
+    .flex-x-center {
+        display: flex;
+        align-items: center;
+    }
+
+    .uplaod-box {
+        background: transparent;
+    }
+
+    #preview-file {
+        width: 150px;
+        height: 150px;
+        display: block;
+        position: absolute;
+        z-index: -1;
+        border: solid 1px #eee;
+        padding: 8px;
+    }
+
+    #sel-file-label {
+        width: 150px;
+        height: 150px;
+        display: flex;
+        padding: 8px;
+        margin: 16px;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+
+    .icon-add {
+        font-size: 24px;
+        text-align: center;
+        color: #007aff;
+    }
+</style>
+
+<script>
+    return {
+        data: function () {
+            return {
+                prvn_popup: '', // 选择省份的popup
+                city_popup: '', // 选择的省份的下的所有城市的popup
+                local_city_data: {}, // 存储在本地的所有城市数据
+                recommit: {}, // 保存前一次次提交的信息
+                upload_bar_dialog: '' // 上传的进度条
+            };
+        },
+        methods: {
+            // 上传进度条进度处理
+            upload_bar(e) {
+                this.upload_bar_dialog.setText('提交中..');
+                this.upload_bar_dialog.setTitle('');
+                this.upload_bar_dialog.setProgress(e.loaded / e.total * 100 | 0, 400);
+                this.$app.utils.nextFrame(() => {
+                    if (e.loaded === e.total) {
+                        this.upload_bar_dialog.setText('提交成功');
+                        setTimeout(() => {
+                            this.upload_bar_dialog.close();
+                        }, 1500);
+                    }
+                })
+            },
+            // 提交所有信息
+            commitAll(e) {
+                let preview_file_src = $('#preview-file')[0].src;
+                let prvn_code = $('#input-prvn')[0].dataset.code;
+                let city_code = $('#input-city')[0].dataset.code;
+                if (!preview_file_src || !prvn_code || !city_code) return app.dialog.alert(`请添加图片并选择省份和城市`, '');
+                if (this.recommit['preview_file_src'] && this.recommit['preview_file_src'] === preview_file_src && this
+                    .recommit['prvn_code'] === prvn_code && this.recommit['city_code'] === city_code) {
+                    return app.dialog.alert(`请不要重复提交`, '');
+                }
+                this.upload_bar_dialog = app.dialog.progress('进度条', 0);
+                let form_data = new FormData();
+                form_data.append('file', $('#sel-file')[0].files[0]);
+                form_data.append('province_code', prvn_code);
+                form_data.append('city_code', city_code);
+                app.utils.nextFrame(() => {
+                    // this.$app.request({
+                    //     url: '/acee-pc/asypc/sc/search/college',
+                    //     async: true,
+                    //     method: 'POST',
+                    //     contentType: 'multipart/form-data',
+                    //     processData: false,
+                    //     data: form_data,
+                    //     success: res => {
+                    //         console.log(res);
+                    //         if (res.state === 1) {
+                    //             app.preloader.hide();
+                    //             app.dialog.alert(`${res.msg}`, '');
+                    //         }
+                    //         if (res.state === -1) {
+                    //             app.preloader.hide();
+                    //             app.dialog.alert(`${res.msg}`, '');
+                    //         }
+                    //     },
+                    //     error: res => console.error('request fail')
+                    // });
+
+                    // XMLHttpRequest 对象
+                    xhr = new XMLHttpRequest();
+                    // post方式，url为服务器请求地址，true 该参数规定请求是否异步处理。
+                    xhr.open("POST", "/acee-pc/asypc/sc/search/college", true);
+                    // 上传事件处理
+                    xhr.upload.onprogress = this.upload_bar;
+                    //请求完成
+                    xhr.onload = res => {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            res = JSON.parse(xhr.response);
+                            console.log(res);
+                            if (res.state === 1) {
+                                this.recommit['preview_file_src'] = preview_file_src;
+                                this.recommit['prvn_code'] = prvn_code;
+                                this.recommit['city_code'] = city_code;
+                                app.dialog.alert(`${res.msg}`, '');
+                            }
+                            if (res.state === -1) {
+                                app.dialog.alert(`${res.msg}`, '');
+                            }
+
+                        }
+                    };
+                    //请求失败
+                    xhr.onerror = res => console.error('request fail');
+                    // 发送数据
+                    xhr.send(form_data);
+                });
+            },
+            // 监听城市按钮点击
+            monitor_city_btn() {
+                $(this.city_popup.el).on('click', 'button', e => {
+                    let {
+                        name,
+                        code,
+                        unable
+                    } = e.target.dataset;
+                    $('#input-city').val(name);
+                    $('#input-city')[0].dataset.name = name;
+                    $('#input-city')[0].dataset.code = code;
+                    this.city_popup.close();
+                });
+            },
+            // 打开省份popup
+            openPrvn() {
+                this.prvn_popup.open();
+                $('#input-city').val('');
+                $('#input-city')[0].dataset.name = '';
+                $('#input-city')[0].dataset.code = '';
+            },
+            // 打开城市popup
+            openCity() {
+                let {
+                    name,
+                    code
+                } = $('#input-prvn')[0].dataset;
+                if (!name || !code) return alertError("请先选择省份", "");
+                if (!this.local_city_data[`${code}`]) {
+                    this.$app.request.get(`http://www.ieac-edu.com/acee/pc/json/province_${code}.json`,
+                        res => {
+                            console.log(res);
+                            this.city_popup = createBtnPopup(res);
+                            this.city_popup.open();
+                            this.local_city_data[`${code}`] = res;
+                            this.monitor_city_btn();
+                        },
+                        error => console.log(error), 'json');
+                } else {
+                    this.city_popup = createBtnPopup(this.local_city_data[`${code}`]);
+                    this.city_popup.open();
+                    this.monitor_city_btn();
+                }
+            },
+        },
+        on: {
+            pageInit: function (e, page) {
+                var self = this;
+                var app = self.$app;
+
+                /* ************* 注册组件 ************** */
+                
+
+                /* ************* 微信群图片处理 ************** */
+                $('#sel-file')[0].onchange = function () {
+                    let file = $('#sel-file')[0].files[0];
+                    let fileReader = new FileReader();
+                    if (!file) return;
+                    fileReader.readAsDataURL(this.files[0]);
+                    //判断浏览器是否支持FileReader
+                    if (!window.FileReader) {
+                        return this.app.dialog.alert(`not supported by your browser!`, '');
+                    } else {
+                        fileReader.onload = function () {
+                            //正则控制上传文件的类型
+                            if (/^image\/jpeg$/.test(file.type) && file.size < 5242880) {
+                                //输出图片预览 FileReader.result结果保存了文件base64的路径
+                                $('#preview-file')[0].src = this.result;
+                                $('#sel-file-label')[0].innerText = '';
+                            } else {
+                                app.dialog.alert(`请选择小于5Mb的jpg格式的图片`, '');
+                            }
+                        }
+                    }
+                };
+
+                /* ************* 初始化省份选择 ************** */
+                let prvnData = [{
+                        name: "四川",
+                        code: 510000
+                    }, {
+                        name: "甘肃",
+                        code: 620000
+                    },
+                    {
+                        name: "云南",
+                        code: 530000,
+                        unable_selected: true
+                    }, {
+                        name: "贵州",
+                        code: 520000,
+                        unable_selected: true
+                    }, {
+                        name: "重庆",
+                        code: 500000,
+                        unable_selected: true
+                    }
+                ];
+                this.prvn_popup = createBtnPopup(prvnData);
+                // 监听省份按钮点击
+                $(this.prvn_popup.el).on('click', 'button', e => {
+                    let {
+                        name,
+                        code,
+                        unable
+                    } = e.target.dataset;
+                    if (unable) return alertError("该地区数据正在建设中", "");
+                    $('#input-prvn').val(name);
+                    $('#input-prvn')[0].dataset.name = name;
+                    $('#input-prvn')[0].dataset.code = code;
+                    this.prvn_popup.close();
+                });
+            },
+            pageAfter: (page) => {},
+            pageBeforeOut: (page) => {
+                //显示导航栏和返回主页按钮
+                $(".view>.toolbarChief")[0].hidden = true;
+                $(".fab.fab-index")[0].hidden = true;
+            }
+        },
+    }
+</script>

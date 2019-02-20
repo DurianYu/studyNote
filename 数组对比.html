@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>---数组对比---</title>
+	<style type="text/css">
+		b {
+			
+			display: inline-block;
+			width: 100%;
+			height: 150px;
+			background: #f09 url('nico_02.jpg') no-repeat center;
+		}
+	</style>
+</head>
+<body>
+	<b>www.jb51.net</b> 
+	<div></div>
+
+	<script type="text/javascript">
+		var _date=[],dateData=["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+		//准备一个月份反转的数组
+		var dateDataRet=Object.assign([],dateData).reverse();
+		//获取当前年份
+		var yearText=new Date().getFullYear();
+		//获取当前月份  调试的时候，大家可以通过调整now调试  3月-now=2,12月now=11...
+		var now=new Date().getMonth(); //获取到的是0-11
+
+		//数组对比
+		var arrayA = ["a", "b","d"];
+		var arrayB = [
+		{
+			key: "a",
+			sex: "male"
+		},
+		{
+			key: "b",
+			sex: "femal"
+		},
+		{
+			key: "c",
+			sex: "male"
+		}
+		];
+
+		compareArr(arrayA, arrayB);
+		console.log(arrayB)
+		/*
+		1、如果arryA中有a，arryB中没有，那么在arryB中增加一个key值为a的obj，且其他属性值可均为’0′;如下： {key:’a’,sex: "0"}
+		2、如果arryA中有a，arryB中也有key值为a的obj,那么arryB则不改变，并且该obj里的其他属性和属性值均不变;
+		3、如果在arryA中删除了a，那么arryB中key值为a的obj整个删掉。
+		*/
+		function compareArr(arrA,arrB) {
+			var result = [], arr;
+			for (var i = 0, len = arrA.length; i < len; i++) {
+				// 用find查找目标值，条件true则返回arrB里符合条件的值，条件不成立则返回undefine
+				arr = arrB.find(function(val) {
+					return val.key === arrA[i];
+				});
+				// 有值时 就存入新数组resu旅途， undefind时就添加新的元素到数组
+				arr? result.push(arr) : result.push({key:arrA[i],sex: "0"});
+			}
+			arrayB = result;  //改变arrayB的元素
+		}
+
+
+		// 循环分析
+		for (var i = 0; i < 10; i++) {
+			setTimeout(() => {
+			  console.log("delay_result:" + i);
+			}, 15)
+		}
+		//i为10的时候判定才false，此时i值已经改变为10
+		var i = 0
+		for (; i < 10; i++) {
+			(function() {
+				//console.log(i);  //0-9
+			})();
+		}
+		//console.log(i)  //10
+
+
+		//map()
+		const numbers = [2, 4, 8, 10];
+		let halves = numbers.map(x => x / 2);
+		console.log(numbers);
+		console.log(halves)
+
+		//大写每个单词首字母
+		var capitalizeEveryword = str => str.replace(/\b[a-z]/g, char => char.toUpperCase()); //"\b"表示限定找到符合的一个字母
+		//console.log(capitalizeEveryword("hellow world")); //Hellow World
+
+
+		//首字母大写，剩下的字母 lowerRest为true时为小写，默认不改变
+		var capitalize = (str,lowerRest = false) => str.slice(0,1).toUpperCase() + (lowerRest?str.slice(1).toLowerCase():str.slice(1));  //slice(0,1) 不包括索引1的值
+		//console.log(capitalize("heLLow world")); //HeLLow world
+		//console.log(capitalize("heLLow world",true)); //Hellow world
+
+		//检查回文
+		//split('') 把填入参数作为分割的条件,返回字符串存入数组,''把每个字母分一次
+		//\W 非数字字母和下划线 \w匹配数字字母下划线 /g  global
+		var palindrome = str => str.toLowerCase().replace(/[\W_]/g,'').split('').reverse().join('') ===str.toLowerCase().replace(/[\W_]/g,'');
+		//console.log(palindrome("tAco_cat"));  //true
+
+
+		//阶乘 递归
+		var f = num => (num>1)?num*f(num-1):1;
+
+
+		//1-100的和 ，迭代
+		var count = x => (x+1)*(x/2);
+
+		
+		//程序经过的时间
+		var t0 = performance.now();
+		console.log();
+		var t1 = performance.now();
+		console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
+
+
+		//数组随机 洗牌算法
+		var a = [1,2,3,4,5,6,7,8];
+		Array.prototype.shuffle = function() {
+			var arr = this.slice(0);  //新变量存放数组
+			var len = this.length;  //this === a
+			for (var i = 0; i < len - 1; i++) {
+			index = Math.floor(Math.random() * (len - i));  //产生len到i之间的随机数 下标， 0.9*8 << 1.0*8
+			var temp = arr[index];
+			arr[index] = arr[len - i - 1];
+			arr[len - i - 1] = temp;
+			}
+			return arr;
+		}
+		console.log(a.shuffle());
+
+		//
+		console.log(document.documentElement.scrollTop)
+		console.log(document.body.scrollTop)
+	</script>
+</body>
+</html>

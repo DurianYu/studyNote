@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>---Plugins---</title>
+    <script src="./modify_div_bg.js"></script>
+</head>
+<body>
+    <div id="sss">怎样写一个js插件</div>
+
+    <script>
+    var myColor = new myPlugins("#sss");
+    console.log(myColor);
+    myColor.setColor("#09f");
+
+    var count = 0
+ 
+    function foo () {
+      this.count++//指向windows的
+    }
+    foo.count = 55
+     
+    for (var i = 0; i < 5; i++) {
+      foo()
+    }
+    foo.a = count;
+
+    // console.log(this);
+
+    </script>
+</body>
+</html>

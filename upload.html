@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>---upLoad---</title>
+	<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js">
+	</script>
+	<style type="text/css">
+	*{
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+		.upFile img {
+			width: 100px;
+			height: 100px;
+			border: 1px solid #09f;
+		}
+		.border {
+			border: 2px solid #09f;
+			margin: 10px 0;
+		}
+		.upFile {
+			width: 380px;
+		}
+		.upFile-box {
+			display: inline-block;
+			border: 1px solid #09f;
+			border-radius: 5px;
+			padding: 2px 0px 2px 5px;
+			width: 300px;
+			height: 28px;
+			overflow: hidden;
+		}
+		.upLoad {
+			float: right;
+			color: #fff;
+			background: #09f;
+			border: 2px solid #09f;
+			margin: 5px 0;
+			border-radius: 3px;
+		}
+	</style>
+</head>
+<body>
+<!-- multipart/form-data不对字符编码，上传文件需设置 -->
+<form enctype="multipart/form-data" action="baseData.php">
+	<!-- for和id绑定 -->
+	<label for="name">姓李</label>
+	<!-- 提交的是value里面的值,提交后 “name=value” -->
+	<input type="radio" name="nama" id="name" value="Mir.Li">
+	<br>
+	<label></label>
+	<input  type="submit" value="upLoad">
+</form>
+
+<div class="border"></div>
+
+<div id="upFile" class="upFile">
+	<img id="upFile_preview" src="">
+	<form enctype="multipart/form-data" method="get">
+		<label class="upFile-box" id="upFile-box" for="selectFile">请点击这里选择文件</label>
+		<input type="file" id="selectFile" name="fileName" style="display: none;">
+		<input id="upLoadBtn" class="upLoad" type="button" value="upLoad" >
+	</form>
+</div>
+<script type="text/javascript">
+	window.onload = function(){
+		// 获取要传输的文件------假设只有一个文件
+		// var file = document.getElementById('selectFile').files[0];
+		let selectFile = document.getElementById('selectFile');
+		selectFile.onchange = function() {
+			//声明文件读取实例
+			let fileReader = new FileReader();
+			let fileType = this.files[0].type;	//input.files获取文件的全部内容 事件、类型、时间
+			let upFile_preview = document.getElementById('upFile_preview');
+
+			// 读取文件以base64方式
+		    fileReader.readAsDataURL(this.files[0]);		    
+			//判断浏览器是否支持FileReader
+			if (!window.FileReader) {
+				alert("not supported by your browser!");
+			}else {
+				fileReader.onload = function() {
+					//正则控制上传文件的类型
+					if (/^image\/[jpeg|png|gif]/.test(fileType)) {
+						//输出图片预览 FileReader.result结果保存了文件base64的路径
+						upFile_preview.src = this.result;
+					}
+				} 
+			}
+			// 获取点击后的值，通过split把地址分割成三段字符串数组，选取最后一段既是文件名
+			let input_file_names = this.value.split('\\');
+			let upFileBox = document.getElementById('upFile-box');
+			upFileBox.innerHTML = input_file_names[input_file_names.length - 1];
+
+			let upFile = document.getElementById('upFile');
+			let form = upFile.getElementsByTagName('form');
+	        let formData = new FormData(form);
+	        //把文件添加到表单里
+	        formData.append("fileName",this.files[0]);
+			let upLoadBtn = document.getElementById('upLoadBtn');
+			upLoadBtn.onclick = function() {
+		        let xhr = new XMLHttpRequest();
+		        xhr.open("post", "myweb/Logindata.php", true);
+		        xhr.send(formData);
+		        xhr.onload = function() {
+		        	alert(xhr.responseText);
+		        }
+		        console.log(xhr);	
+
+			}			
+		}
+	}
+
+
+
+	/* ************* 用ajax发送文件给后台 ************* */
+	// let post_form_data = new FormData();
+    // post_form_data.append('file', $('#sel-file')[0].files[0]);
+    
+	// 	$('#selectFile').on('change', function(){
+	// 		let upFile = document.getElementById('upFile');
+	// 		let form = upFile.getElementsByTagName('form');
+	//         let formData = new FormData(form);
+	//         //把文件添加到表单里
+	//         formData.append("fileName",this.files[0]);
+
+	// 		$.ajax({
+	// 			url: "myweb/Logindata.php",
+	// 			type: "POST",
+	// 			dataType: "json",
+	// 			processData: false,	//不处理数据
+	// 			contentType: false,	//不设置内容类型
+	// 			data: {
+	// 				formData: formData
+	// 			},
+	// 			success: function(response) {
+	// 				console.log(response);
+	// 			}
+
+	// 		});
+
+	// 	    let input_file_names = this.value.split('\\');
+	// 		获取点击后的值，通过split把地址分割成三段字符串数组，选取最后一段既是文件名
+	// 		let input_file_names = $(this).val().split('\\');
+	//         $('#upFile-box').html(input_file_names[input_file_names.length - 1]);
+	// 	});
+	// };
+
+
+</script>
+</body>
+</html>

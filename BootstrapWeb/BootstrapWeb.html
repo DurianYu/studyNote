@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<!--BootStrap设计的页面支持响应式的 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>---localstorageMessageBoard---</title>
+	<!--引入BootStrap的CSS-->
+	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+	<!--引入JQuery的JS文件：JQuery的JS文件要在BootStrap的js的文件的前面引入-->
+	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+	<!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+	<script type="text/javascript" src="js/popper.js"></script>
+	<!--引入BootStrap的JS的文件-->
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<style type="text/css">
+			* {
+			font-family: "Microsoft YaHei";
+		}
+		body {
+			background: #f2f3f5;
+			position: relative;
+		}
+
+		.circle {
+			background: #fff;
+			border: 1px solid #e3e8ec;
+			border-radius: 12px;
+		}
+
+		.myScrollspy {
+			position: fixed;
+			right: 0;
+			top: 40%;
+			margin-right: 20px;
+			z-index: 9;
+		}
+
+		.mainContent {
+			padding: 50px 0 0 65px;
+		}
+
+		@media screen and (max-width: 768px) {
+			.mainContent {
+				padding: 15px 8px 0 8px;
+			}
+			#myScrollspy {
+				display: none;
+			}
+		}
+
+		.smallText {
+			color: #999;
+			font-size: 12px;
+		}
+
+		.support {
+			margin-left: 10px;
+		}
+
+		.support-right {
+			display: inline-block;
+			float: right;
+		}
+
+		a:hover {
+			text-decoration: none;
+		}
+
+		.content {
+			color: #666;
+			font-size: 14px;
+		}
+
+		#collapsibleNavbar a {
+			color: #666;
+		}
+
+		.userFace {
+			padding: 31px 0 0 0;
+			display: block;
+		}
+
+		.userFace img {
+			width: 58px;
+			height: 58px;
+			border-radius: 0 12px 0 12px;
+		}
+
+		#btnPublish input {
+			margin: 24px 0 0 20px;
+			width: 75px;
+			height: 75px;
+		}
+
+		#msgBox {
+			padding: 18px 0 0 25px;
+		}
+
+		@media screen and (max-width: 644px) {
+			.userFace img {
+				display: none;
+			}
+			#btnPublish input {
+				margin: 24px 0 0 10px;
+				width: 75px;
+				height: 75px;
+			}
+			#msgBox {
+				padding: 18px 0 0 0px;
+			}
+		}
+
+		#msgContent {}
+
+		.userInfo {
+			padding: 30px 0 4px 25px;
+			display: block;
+			word-wrap: break-word;
+		}
+
+		.user {
+			margin-bottom: 4px;
+		}
+
+		.user a {
+			font-size: 12px;
+			font-weight: 700;
+			line-height: 18px;
+			color: #888;
+
+		}
+
+		.userInfo p {
+			font-size: 14px;
+			line-height: 24px;
+			margin: 0;
+		}
+
+		.userFloor {
+			color: #99a2aa;
+			font-size: 12px;
+			line-height: 26px;
+		}
+
+		.time {
+			margin: 0 0 0 12px;
+		}
+	</style>
+</head>
+<!-- 滚动监听 -->
+
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="10">
+
+	<!-- 导航栏 -->
+	<nav class="navbar navbar-expand-md bg-light navbar-light">
+		<a class="navbar-brand">Confuse</a>
+		<!-- 折叠按钮 -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav ">
+				<li class="nav-item"><a href="#" class="nav-link">首页</a></li>
+				<li class="nav-item"><a href="#" class="nav-link">摄影</a></li>
+				<li class="nav-item"><a href="#" class="nav-link">排行榜</a></li>
+				<li class="nav-item"><a href="#" class="nav-link">活动中心</a></li>
+				<li class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">类型</a>
+					<div class="dropdown-menu">
+						<a href="" class="dropdown-item">心灵鸡汤</a>
+						<a href="" class="dropdown-item">世外桃源</a>
+						<a href="" class="dropdown-item">天籁之音</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+
+
+
+
+
+	<nav class="myScrollspy circle" id="myScrollspy">
+		<ul class="nav nav-pills flex-column">
+			<li class="nav-item">
+				<a href="#section1" class="nav-link ">↑ Top</a>
+			</li>
+			<li class="nav-item">
+				<a href="#content" class="nav-link">内容</a>
+			</li>
+			<li class="nav-item">
+				<a href="#msgBoard" class="nav-link">留言板</a>
+			</li>
+			<!-- 				<li class="nav-item">
+					<a href="#downMoudle" class="nav-link">Down</a>
+				</li> -->
+		</ul>
+	</nav>
+
+
+
+	<div class="col mainContent" id="mainContent">
+		<div class="col-md-8 circle">
+			<div id="section1" style="margin-top: 20px">
+				<p class="smallText text-right">
+					<a href="">
+					举报
+				</a>
+				</p>
+				<p class="smallText">
+					<span>日常</span>
+					<span class="support">发表时间：2017-12-14 17:35:48</span>
+					<span class="support support-right">支持：8</span>
+					<span class="support support-right">收藏：15</span>
+					<span class="support support-right">浏览：5510</span>
+				</p>
+			</div>
+
+			<div class="dropdown-divider"></div>
+
+			<div id="content" class="content">
+				<h4 class="text-center">爱，流淌在心底的清溪</h4>
+				<p>
+					时光清浅，新的一天总会如约而至。白云轻轻的飘着，清清的河水静静地流淌着，大地在一片萧瑟中整装待发，孕育着新的生机。人间有爱，岁月沉香。爱，是流淌在心底的清溪，无声的滋润着我们单薄的心。爱是一句温暖的话语，是一份思念，是缤纷绚烂时的热烈。
+				</p>
+				<p>
+					<img src="images/photo1.jpg" alt="" class="rounded img-fluid">
+				</p>
+				<p>
+					爱在心里，生命的长河潺潺不息，默默的相伴，无声的挂牵。爱是人生中美好的际遇，生命中不老的花朵，生机与活力并存，美丽与芬芳常在。
+				</p>
+				<p>
+					<img src="images/photo2.jpg" alt="" class="rounded img-fluid">
+				</p>
+				<p>
+					光阴，在季节的风声里一寸一寸的消匿。院落里，那几朵黄菊在风霜里不再娇丽。岁月未老，心亦未老，只是时光的年轮在脸上留下了痕迹。突然间，心中有了千帆过尽的云淡风清，繁华过后的淡泊宁静。懂得了光阴如流，更应从容度日。
+				</p>
+				<p>
+					<img src="images/photo3.jpg" alt="" class="rounded img-fluid">
+				</p>
+				<p>
+					你说，人生需要留白。我说，爱也需要留白。那么，且将未走完的路留给冷寂的冬季，留给春暖花开！有爱，有期许，生活便会是一种别样的美丽！
+				</p>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+		<div style="margin: 18px 0 0 0" class="col-md-8 circle">
+			<div class="col" style="margin: 38px 0 0 0 " id="msgBoard">
+				<h5 class="text-primary ">留言板</h5>
+
+				<div class="dropdown-divider"></div>
+
+				<!-- 留言板内容 -->
+				<div id="msgContent">
+					<div class="msgContentModule">
+						<div class="row">
+							<div class="userFace">
+								<img src="images/demo1.jpg" alt="" class="img-fluid img-thumbnail">
+							</div>
+							<div class="userInfo col">
+								<div class="user">
+									<a href="">璃之あい</a>
+								</div>
+								<p>一场即将盛开的荷花的舞蹈，一场不久后盛大的扑面而来的幽香，即将在你如有神韵的笔下轻轻飘来。</p>
+								<div class="userFloor">
+									<span class="floor">#1</span>
+									<span class="time">2017-12-16 11:14</span>
+								</div>
+							</div>
+						</div>
+						<div class="dropdown-divider"></div>
+					</div>
+
+					<div class="msgContentModule">
+						<div class="row">
+							<div class="userFace">
+								<img src="images/demo2.jpg" alt="" class="img-fluid img-thumbnail">
+							</div>
+							<div class="userInfo col">
+								<div class="user">
+									<a href="">水果牛奶</a>
+								</div>
+								<p>雨后的荷叶，那般的翠绿，那般的晶莹剔透；雨后的荷花那般的娇羞迷人，那般的纯净洁白。美丽高尚，高洁无华，宁静致远，你的心被这景致深深打动，一切的烦恼与不快早就抛到九霄云外。</p>
+								<div class="userFloor">
+									<span class="floor">#1</span>
+									<span class="time">2017-12-17 08:14</span>
+								</div>
+							</div>
+						</div>
+						<div class="dropdown-divider"></div>
+					</div>
+
+					<div class="msgContentModule">
+						<div class="row">
+							<div class="userFace">
+								<img src="images/demo3.jpg" alt="" class="img-fluid img-thumbnail">
+							</div>
+							<div class="userInfo col">
+								<div class="user">
+									<a href="">好大只的小透明</a>
+								</div>
+								<p>清照描写的那首《如梦令》：争渡，争渡，误入藕花深处。你想像着自己一个人，撑着一叶小船，在如烟如雾的荷塘中悠然行驶，你坐在船上，纤纤玉手摘一片荷叶，放在头顶，遮住那细小如丝的雨点；你的脸轻轻碰触那柔软的花瓣，一阵香气扑鼻而来，想到了阿妈亲手为你做的颊齿留香荷花糕，喝着用荷露浸泡的茶，那该是一种怎样的香甜与惬意！</p>
+								<div class="userFloor">
+									<span class="floor">#1</span>
+									<span class="time">2017-12-18 15:14</span>
+								</div>
+							</div>
+						</div>
+						<div class="dropdown-divider"></div>
+					</div>
+
+				</div>
+
+
+
+
+
+
+
+				<form class="form-horizontal " role="form">
+					<!-- 							<div class="form-group">
+								<label class="col-sm-1 control-label" for="userName">用户名：</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" placeholder="请输入用户名" id="userName">
+									</div>
+							</div> -->
+					<div class="row">
+						<div class="userFace">
+							<img src="images/userface.jpg" alt="" class="img-fluid img-thumbnail">
+						</div>
+						<div class="form-group w-75 col" id="msgBox">
+							<textarea style="overflow-x: hidden;" class="form-control bg-light " rows="3" placeholder="请输入想要的留言"></textarea>
+						</div>
+						<div class="form-group" id="btnPublish">
+							<input type="button" value="发表" class="btn btn-primary text-center">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+
+
+
+
+
+	</div>
+
+	<div style="margin: 28px 0 0 0;" class="col-md-12 bg-white">
+		<div style="padding: 20px 0 5px 0;" id="downMoudle" class="mainContent">
+			<p class="text-center smallText">提供好文章美文,经典日志文章,日记随笔,美文故事,诗歌散文在线阅读欣赏!
+			</p>
+			<p class="text-center smallText">Copyright © 2008-2015.Confuse文章网 www.confuse.com　版权所有</p>
+		</div>
+	</div>
+
+</body>
+
+</html>
