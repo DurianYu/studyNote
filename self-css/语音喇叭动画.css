@@ -1,0 +1,54 @@
+                 <span class="anime-wave flex-x-y-center">
+                      <div class="wave-1"></div>
+                      <div class="wave-2"></div>
+                      <div class="wave-3"></div>
+                    </span>
+/* ********** 语音波浪 ********** */
+  .classroomRecorder .anime-wave {
+    width: 30px;
+    height: 20px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .classroomRecorder .wave-1 {
+    border: 3px solid transparent;
+    border-right: 3px solid #ff9500;
+    position: absolute;
+  }
+
+  .classroomRecorder .wave-2 {
+    width: 10px;
+    height: 10px;
+    border: 3px solid transparent;
+    border-right: 3px solid #ff9500;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .classroomRecorder .wave-3 {
+    width: 20px;
+    height: 20px;
+    border: 3px solid transparent;
+    border-right: 3px solid #ff9500;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .classroomRecorder .wave-2-anime {
+    animation: fadeIn 1s ease-in-out infinite 0.3s backwards running;
+  }
+
+  .classroomRecorder .wave-3-anime {
+    animation: fadeIn 1s ease-in-out infinite 0.5s backwards running;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
