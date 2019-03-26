@@ -1,0 +1,47 @@
+<div class="music-beat">
+              <span class="beat-1"></span>
+              <span class="beat-2"></span>
+              <span class="beat-3"></span>
+            </div>
+/* 音乐节奏跳动 */
+.music-beat {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  justify-content: center;
+  transform: rotate(180deg);
+
+  .beat-1,
+  .beat-2,
+  .beat-3 {
+    width: 3px;
+    height: 100%;
+    background: #ab47bc;
+  }
+
+  .beat-2, .beat-3 {
+    margin: 0 0 0 2px;
+  }
+
+  .beat-1 {
+    animation: beat 1s ease-in-out infinite .3s alternate backwards running;
+  }
+  .beat-2 {
+    animation: beat 1s ease-in-out infinite .5s alternate backwards running;
+  }
+  .beat-3 {
+    animation: beat 1s ease-in-out infinite .1s alternate backwards running;
+  }
+}
+
+@keyframes beat {
+  0% {
+    height: 5px;
+  }
+  50% {
+    height: 14px;
+  }
+  100% {
+    height: 7px;
+  }
+}

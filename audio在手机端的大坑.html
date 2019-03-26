@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>---音频---</title>
+	</script>
+	<style type="text/css">
+		*{
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		.border {
+			border: 2px solid #09f;
+			margin: 10px 0;
+		}
+	</style>
+</head>
+<body>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.3.0/vconsole.min.js"></script>
+
+  <audio preload="auto" :src="/" id="player">
+  </audio>
+
+<div id="asd" onclick="aa()">点我</div>
+<script type="text/javascript">
+	const vConsole = new VConsole();
+let qq = '';
+	    function loadSongInfo(ids) {
+      return new Promise((resolve, reject) => {
+        axios({
+          url: `https://www.suzumiya.club:3637/song/detail?ids=66476`
+        }).then(res => {
+          resolve(res.data);
+        }).catch(error => reject(error));
+      });
+    }
+
+	function aa() {
+		loadSongInfo().then(res => {
+			console.log('加载快乐', res);
+			let audio = document.querySelector('#player');
+			audio.src = 'https://music.163.com/song/media/outer/url?id=346576.mp3';
+			audio.play();
+			console.log('播放状态', audio.paused); // 处于任何回调、then（）、await 后面播放时， 手机端除了QQ之外，都不能播放！！！
+		});
+		
+	}
+</script>
+</body>
+</html>
