@@ -167,27 +167,27 @@
 			// new的时候this指向 new的左边, 此时this.下面的方法就变成了新对象的方法,可直接调用
 			console.log('this', this);
 			this.name = name ? name : '默认值';
-			// 对象方法
-			this.Print = function() {
+			// 对象方法 !!! 因为函数也是一个对象 !!!
+			this.Print = function() { // 写入到 pp 下面
 				console.log('我是', this.name);
 			}
 		}
-		// 类方法, 出现在pp的原型下的constructor, 所以该方法是构造函数所有
+		// 类方法, 出现在pp的原型__proto__下的constructor下面, 所以该方法是构造函数所有
 		People.Run = function() {
 			// console.log(this) // 指向People函数
 			console.log('i can run', this.name); // 函数也是对象， 所以this.name是函数名：People
 		}
-		// 原型方法
+		// 原型方法  写入到 pp.__proto__ 下面
 		People.prototype.Introduce = function() {
 			console.log('可以是使用this.name:', this.name)
 		};
 
 		let pp = new People();
-		pp.Print();
+		pp.Print(); // 输出: 我是 默认值
 		// pp.Run(); // is not a function
-		pp.Introduce();
+		pp.Introduce(); // 输出: 可以是使用this.name: 默认值
 		// People.Print(); // is not a function
-		People.Run();
+		People.Run(); // 输出: i can run People
 		// People.Introduce(); // is not a function
 
 		People()
