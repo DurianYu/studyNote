@@ -146,6 +146,16 @@
 		console.log('window', window);
 	</script>
 	<script type="text/javascript">
+		// 常用验证
+		// 姓名
+		var reg_realName=/^(?=.*\d.*\b)/;
+		// 手机号
+		var reg_phone=/^(\d{5}|\d{6}|\d{7}|\d{8}|\d{9}|\d{10}|\d{11}|\d{12}|\d{13}|\d{14}|\d{15}|\d{16}|\d{17}|\d{18}|\d{19}|\d{20}|\d{21})$/;
+		// 省份证
+		var reg_identity=/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+            
+
+
 		// doAsync()执行顺序如下:
 		// do it, asd, 3333, fast4444
 		function asyncExe() {
