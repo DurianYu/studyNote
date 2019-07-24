@@ -49,12 +49,12 @@ for a in entry_all_a:
     #     a = entry_all_a[random.randint(0,len(entry_all_a))]
     # except IndexError as e:
     #     print('发生异常，跳过此次查找')
-    #     continue 
+    #     continue
     # 存储标题和链接。同时去除标题前后空格
     type_info.title = a.get_text().strip()
     type_info.url = a['href']
     # 设置根目录文件夹
-    root_path = 'D:/Apache24/htdocs/Man\'sDream/';
+    root_path = 'D:/Man\'sDream/';
     # 查看路径是否存在该文件夹，没有就创建该文件夹
     if not os.path.exists(root_path + type_info.title):
         os.makedirs(root_path + type_info.title)

@@ -2,7 +2,7 @@ import subprocess, time, sys
 # 检测的频率
 TIME = 60*5
 # 要重启的脚本文件
-MONITOR_FILE = 'D:\Apache24\htdocs\caughtImg.py'
+MONITOR_FILE = './caughtImg.py'
 
 class AutoRun:
     """docstring forAutoRun."""
