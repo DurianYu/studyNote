@@ -47,6 +47,9 @@ if __name__ == '__main__':
         for v2 in os.listdir(os.path.join(BASIC_PATH, v1)):
             # 打开视频文件夹下的.JSON文件
             json_file = os.path.join(BASIC_PATH, v1, v2, '数据.json')
+            if not os.path.exists(json_file) or not os.path.getsize(json_file):
+                print('没有.json文件， 跳过')
+                continue
             with open(json_file, 'r+', encoding='utf-8', errors='ignore') as f:
                 json_data = json.loads(f.read())
                 if json_data['_数据库信息'].get('_cmf_users_video_id'):
@@ -56,7 +59,7 @@ if __name__ == '__main__':
                 status = '1'
                 isdel = '0'
                 title = json_data['_抖音数据']['_描述']
-                thumb = json_data['_数据库信息']['_封面1_url']
+                thumb = json_data['_数据库信息']['_封面2_url']
                 href = json_data['_数据库信息']['_抖音mp4_url']
                 # 时间戳
                 addtime = int(time.time())
@@ -71,20 +74,21 @@ if __name__ == '__main__':
                     (`status`, `isdel`, `title`, `thumb`, `href`, `addtime`, `uid`, `thumb_s`, `show_val`)
                     VALUES
                     ('{}','{}','{}','{}','{}','{}','{}','{}','{}')""".format(status, isdel, title, thumb, href, addtime, uid, thumb_s, show_val))
+                    # 此方法要在commit之前使用， 否则值为 0
+                    id = conn.insert_id()
+                    print('video_id: ', id)
                     cursor.execute("""INSERT INTO `cmf_video_class_details`
                     (`sd_id`, `video_id`)
-                    VALUES('{}','{}',)""".format(uid, tag_id))
-                    # 此方法要在commit之前使用， 否则值为 0
-                    # id = conn.insert_id()
+                    VALUES('{}','{}',)""".format(id, tag_id))
                     # 提交到数据库执行
                     conn.commit()
                     print('提交成功')
                     # 获取主键
                     # 此方法要在commit之后使用， 否则值为 空
-                    id = cursor.lastrowid
+                    # id = cursor.lastrowid
                     print('last_id: ', id)
                     json_data['_数据库信息']['_cmf_users_video_id'] = f'{id}'
-                    print('new json_data', json_data)
+                    print('new json_data', id)
                     # 移动指针 到开始处
                     f.seek(0)
                     # 清空文件 - 指针必须指向开始处

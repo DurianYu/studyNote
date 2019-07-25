@@ -53,8 +53,11 @@ if __name__ == '__main__':
     for v1 in os.listdir(BASIC_PATH):
         # 进入博主文件夹
         for v2 in os.listdir(os.path.join(BASIC_PATH, v1)):
+            json_file = os.path.join(BASIC_PATH, v1, v2, '数据.json')
+            if not os.path.exists(json_file) or not os.path.getsize(json_file):
+                print('没有.json文件， 跳过')
+                continue
             _files = getFileInfo(os.path.join(BASIC_PATH, v1, v2))
-            print('开始: ', v2)
             # 先打开.json文件
             with open(os.path.join(BASIC_PATH, v1, v2, '数据.json'), 'r+', encoding='utf-8', errors='ignore') as f:
                 json_data = json.loads(f.read())
@@ -78,8 +81,8 @@ if __name__ == '__main__':
                     assert ret['hash'] == etag(localfile)
                     json_data['_数据库信息'][_file['name']] = f'{domain}/{key}'
 
-                # 写入信息到.json文件
-                print('new json_data: ', json_data)
-                f.seek(0)
-                f.truncate()
-                f.write(json.dumps(json_data, indent = 4, ensure_ascii = False))
+                    # 写入信息到.json文件
+                    print('new json_data: ', json_data)
+                    f.seek(0)
+                    f.truncate()
+                    f.write(json.dumps(json_data, indent = 4, ensure_ascii = False))

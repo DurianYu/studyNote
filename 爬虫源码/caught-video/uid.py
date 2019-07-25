@@ -17,6 +17,7 @@ BASIC_PATH = '/Users/mason/Downloads/jsp'
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--inputdir', help='播主文件夹的 父级文件夹')
+
     args = parser.parse_args()
 
     if args.inputdir is None:
@@ -24,7 +25,6 @@ if __name__ == '__main__':
         exit(0)
 
     BASIC_PATH = args.inputdir
-    # FILE_NAME = args.filename
 
     print(f'文件目录{BASIC_PATH}')
 
@@ -37,14 +37,17 @@ if __name__ == '__main__':
     # 列出博主名字的文件夹
     for v1 in os.listdir(BASIC_PATH):
         # 进入博主文件夹
-        count = 1
+        count = True
         id = ''
         for v2 in os.listdir(os.path.join(BASIC_PATH, v1)):
             # 打开视频文件夹下的.JSON文件
             json_file = os.path.join(BASIC_PATH, v1, v2, '数据.json')
+            if not os.path.exists(json_file) or not os.path.getsize(json_file):
+                print('没有.json文件， 跳过')
+                continue
             with open(json_file, 'r+', encoding='utf-8', errors='ignore') as f:
                 json_data = json.loads(f.read())
-                if (count == 1):
+                if (count):
                     # 读取信息
                     user_login = json_data['_播主信息']['_抖音号']
                     user_pass = '###ea1e6729b1bcd5575033baf0e8cd127b'
@@ -74,12 +77,13 @@ if __name__ == '__main__':
                         print('last_id: ', id)
                         json_data.setdefault('_数据库信息', {})
                         json_data['_数据库信息']['_id'] = f'{id}'
-                        print('new json_data', json_data)
+                        print('new json_data', id)
                         # 移动指针 到开始处
                         f.seek(0)
                         # 清空文件 - 指针必须指向开始处
                         f.truncate()
                         f.write(json.dumps(json_data, indent = 4, ensure_ascii = False))
+                        count = False
                     except:
                         # Rollback in case there is any error
                         conn.rollback()
@@ -87,12 +91,11 @@ if __name__ == '__main__':
                     # 每个文件夹下的.json更新
                     json_data.setdefault('_数据库信息', {})
                     json_data['_数据库信息']['_id'] = f'{id}'
-                    print('new json_data', json_data)
+                    print('填充剩余数据')
                     # 移动指针 到开始处
                     f.seek(0)
                     # 清空文件 - 指针必须指向开始处
                     f.truncate()
                     f.write(json.dumps(json_data, indent = 4, ensure_ascii = False))
-                count += 1
     conn.close()
     print('结束')
