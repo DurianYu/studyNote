@@ -1,7 +1,7 @@
 import argparse
 import json
 import os
-import re
+import re, time
 
 import emoji as emoji
 import requests
@@ -28,6 +28,10 @@ def real_download(data, index):
     if os.path.exists(bp) is False:
         os.makedirs(bp)
 
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36 OPR/62.0.3331.99'
+    }
+
     try:
         r = requests.get(data.get('_飞瓜数据').get('_封面地址_飞瓜'))
         with open(os.path.join(bp, '封面1.jpg'), 'wb') as f:
@@ -37,12 +41,16 @@ def real_download(data, index):
         with open(os.path.join(bp, '封面2.jpg'), 'wb') as f:
             f.write(r.content)
 
-        r = requests.get(data.get('_抖音数据').get('_mp4'))
+        r = requests.get(data.get('_抖音数据').get('_mp4'), headers=headers)
         with open(os.path.join(bp, '抖音.mp4'), 'wb') as f:
             f.write(r.content)
 
         r = requests.get(data.get('_抖音数据').get('_mp3'))
         with open(os.path.join(bp, '抖音.mp3'), 'wb') as f:
+            f.write(r.content)
+
+        r = requests.get(data.get('_播主信息').get('_头像'))
+        with open(os.path.join(bp, '头像.jpg'), 'wb') as f:
             f.write(r.content)
 
         with open(os.path.join(bp, '数据.json'), 'w', encoding='utf-8') as f:
@@ -69,7 +77,8 @@ def parse_text(text):
     ps = soup.findAll('p')
 
     _作者ID = ps[1].find('span').text
-    _描述 = ps[2].find('span').text
+    # 过滤关键词
+    _描述 = re.sub('[@#]抖音小助手', '', ps[2].find('span').text)
     _评论量 = ps[3].find('span').text
     _点赞量 = ps[4].find('span').text
     _分享量 = ps[5].find('span').text
@@ -86,12 +95,30 @@ def parse_text(text):
     }
     return data
 
+# 解析视频地址
+def parse_mp4_url(url):
+    payload = {
+        'link': url
+    }
+    url= 'http://dnqia.cn/ajax/analyze.php'
+    r = 'fill'
+    try:
+        r = requests.post(url, payload, timeout=10)
+    except Exception as e:
+        print(e)
+        return None
+
+    res = json.loads(r.text)
+    print('res: ', res)
+    if res and res['retCode'] == 200:
+        return res['data']['video']
+    else:
+        return None
 
 def parse_uri(url):
     payload = {
         'url': url
     }
-
     url = 'https://api.douyin.qlike.cn/parse.php?app=douyin'
     try:
         r = requests.post(url, payload, timeout=10)
@@ -168,6 +195,7 @@ def parse_data(data):
 
         _抖音地址 = tds[2].select('a')[2].get('href')
 
+
         data = {
             '_播主': u_name,
             '_标题': _标题,
@@ -214,8 +242,14 @@ if __name__ == '__main__':
         r = parse_uri(_抖音地址)
         if r is None:
             continue
-
         dy_data = parse_text(r)
+
+        # 重新 抓取新的去水印的视频地址
+        _mp4_url = parse_mp4_url(data['_抖音地址'])
+        if _mp4_url is None:
+            continue
+        dy_data['_mp4'] = _mp4_url
+        print('dy_data: ', dy_data)
 
         tmp = {
             '_飞瓜数据': data,
@@ -226,5 +260,6 @@ if __name__ == '__main__':
 
     index = 1
     for item in download_datas:
+        time.sleep(1)
         real_download(item, index)
         index += 1

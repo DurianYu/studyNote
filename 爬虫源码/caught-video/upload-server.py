@@ -14,6 +14,15 @@ import MySQLdb
 # 上传视频相关信息至服务器 (即：模拟后台添加视频功能)
 BASIC_PATH = '/Users/mason/Downloads/jsp'
 
+def getEncode(json_file):
+    with open(json_file, 'r+', encoding='utf-8', errors='ignore') as f:
+        json_data = json.loads(f.read())
+        # 读取信息
+        if json_data.get('_抖音数据'):
+            return 'utf-8'
+        else:
+            return 'gbk'
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--inputdir', help='播主文件夹的 父级文件夹')
@@ -29,7 +38,7 @@ if __name__ == '__main__':
     print(f'文件目录{BASIC_PATH}')
 
     # 连接数据库
-    conn = MySQLdb.connect("121.40.52.138", "yb_zhibo_dev", "ptwtTkfdWMU0ixIb", "yb_zhibo_dev", charset='utf8' )
+    conn = MySQLdb.connect(host="121.40.52.138", port=23306, db="zhibo", passwd="Ff3*h7E5e8Tr", user="zhibo", charset='utf8' )
     # 游标 - 操作数据库
     cursor = conn.cursor()
     # 查询标签
@@ -47,14 +56,17 @@ if __name__ == '__main__':
         for v2 in os.listdir(os.path.join(BASIC_PATH, v1)):
             # 打开视频文件夹下的.JSON文件
             json_file = os.path.join(BASIC_PATH, v1, v2, '数据.json')
-            if not os.path.exists(json_file) or not os.path.getsize(json_file):
-                print('没有.json文件， 跳过')
+            mp4_file = os.path.join(BASIC_PATH, v1, v2, '抖音.mp4')
+            if not os.path.exists(json_file) or not os.path.getsize(json_file) or os.path.getsize(mp4_file) < 512000:
+                print('没有.json文件 或 mp4文件太小， 跳过')
                 continue
-            with open(json_file, 'r+', encoding='utf-8', errors='ignore') as f:
+            encode_type = getEncode(json_file)
+            with open(json_file, 'r+', encoding=encode_type, errors='ignore') as f:
                 json_data = json.loads(f.read())
                 if json_data['_数据库信息'].get('_cmf_users_video_id'):
                     print('已有数据，跳过')
                     continue
+
                 # 读取信息
                 status = '1'
                 isdel = '0'
@@ -63,13 +75,23 @@ if __name__ == '__main__':
                 href = json_data['_数据库信息']['_抖音mp4_url']
                 # 时间戳
                 addtime = int(time.time())
+                # 播主 - uid
                 uid = json_data['_数据库信息']['_id']
                 thumb_s = json_data['_数据库信息']['_封面2_url']
                 show_val = None
-                tag_id = tags.get('云计算')
+                # 视频 - 标签
+                tag_id = tags.get(local_tag)
+                if not tag_id:
+                    print('视频二级标签错误，请检查路径')
+                    exit(0)
+                # 播主 - 头像
+                avatar = json_data['_数据库信息']['_头像_url']
+                avatar_thumb = json_data['_数据库信息']['_头像_url']
+
                 # 存储数据库
                 try:
                     # 执行sql语句
+                    # 插入 - 视频数据
                     cursor.execute("""INSERT INTO `cmf_users_video`
                     (`status`, `isdel`, `title`, `thumb`, `href`, `addtime`, `uid`, `thumb_s`, `show_val`)
                     VALUES
@@ -77,9 +99,12 @@ if __name__ == '__main__':
                     # 此方法要在commit之前使用， 否则值为 0
                     id = conn.insert_id()
                     print('video_id: ', id)
+                    # 插入 - 视频标签
                     cursor.execute("""INSERT INTO `cmf_video_class_details`
                     (`sd_id`, `video_id`)
-                    VALUES('{}','{}',)""".format(id, tag_id))
+                    VALUES('{}','{}')""".format(tag_id, id))
+                    # 更新 - 播主头像
+                    cursor.execute("""UPDATE `cmf_users` SET avatar='{}', avatar_thumb='{}' WHERE id = '{}'""".format(avatar, avatar_thumb, uid))
                     # 提交到数据库执行
                     conn.commit()
                     print('提交成功')

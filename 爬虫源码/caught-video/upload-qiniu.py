@@ -26,14 +26,24 @@ secret_key = 'PwSekd_1RxHa_0apOOQ0XKaJm3GYfmJKUB2WAPf8'
 q = Auth(access_key, secret_key)
 #要上传的空间
 bucket_name = 'zhibo'
-domain = 'http://zhibo-qiniu-tmp.chinaylqg.net'
+domain = 'http://zhibo-qiniu-tmp.youninyouqu.com'
+
+def getEncode(json_file):
+    with open(json_file, 'r+', encoding='utf-8', errors='ignore') as f:
+        json_data = json.loads(f.read())
+        # 读取信息
+        if json_data.get('_抖音数据'):
+            return 'utf-8'
+        else:
+            return 'gbk'
 
 # 组装文件信息
 def getFileInfo(file_path):
     return [{'name': '_封面1_url', 'suffix': 'jpg', 'file': os.path.join(file_path, '封面1.jpg')},
     {'name': '_封面2_url', 'suffix': 'jpg', 'file': os.path.join(file_path, '封面2.jpg')},
     {'name': '_抖音mp3_url', 'suffix': 'mp3', 'file': os.path.join(file_path, '抖音.mp3')},
-    {'name': '_抖音mp4_url', 'suffix': 'mp4', 'file': os.path.join(file_path, '抖音.mp4')}]
+    {'name': '_抖音mp4_url', 'suffix': 'mp4', 'file': os.path.join(file_path, '抖音.mp4')},
+    {'name': '_头像_url', 'suffix': 'jpg', 'file': os.path.join(file_path, '头像.jpg')}]
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -53,14 +63,17 @@ if __name__ == '__main__':
     for v1 in os.listdir(BASIC_PATH):
         # 进入博主文件夹
         for v2 in os.listdir(os.path.join(BASIC_PATH, v1)):
+            print(v1, v2)
             json_file = os.path.join(BASIC_PATH, v1, v2, '数据.json')
             if not os.path.exists(json_file) or not os.path.getsize(json_file):
-                print('没有.json文件， 跳过')
+                print('没有.json文件 或 mp4文件太小， 跳过')
                 continue
             _files = getFileInfo(os.path.join(BASIC_PATH, v1, v2))
+            encode_type = getEncode(json_file)
             # 先打开.json文件
-            with open(os.path.join(BASIC_PATH, v1, v2, '数据.json'), 'r+', encoding='utf-8', errors='ignore') as f:
+            with open(os.path.join(BASIC_PATH, v1, v2, '数据.json'), 'r+', encoding=encode_type, errors='ignore') as f:
                 json_data = json.loads(f.read())
+                print(json_data)
                 if json_data['_数据库信息'].get('_抖音mp4_url'):
                     print('已有数据，跳过')
                     continue
