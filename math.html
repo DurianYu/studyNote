@@ -111,10 +111,10 @@
 		console.log('mymodule.isPassword', mymodule.isPassword);
 
 		// 以原名导入
-		import {isEmail} from './component.js';
+		import { isEmail } from './component.js';
 
 		// 以别名导入多个
-		import {isEmail as email, isPassword, isPassword as ps} from './component.js';
+		import { isEmail as email, isPassword, isPassword as ps } from './component.js';
 		let email_1 = '++88545*tt.x@q55.com';
 		let email_2 = '2233@qq.com';
 		console.log('isEmail(email_1)', isEmail(email_1));
@@ -146,30 +146,70 @@
 		console.log('window', window);
 	</script>
 	<script type="text/javascript">
+
+		// 响应式设计
+		responsiveLayout() {
+			let dsgn_w = 414;
+			let dsgn_fontSize = 15;
+			let win_w = document.documentElement.offsetWidth;
+			let ratio = win_w / dsgn_w;
+			document.documentElement.style.fontSize = `${ratio * dsgn_fontSize}px`;
+		}
+
+
+
+
 		// 常用验证
 		// 姓名
-		var reg_realName=/^(?=.*\d.*\b)/;
+		var reg_realName = /^(?=.*\d.*\b)/;
 		// 手机号
-		var reg_phone=/^(\d{5}|\d{6}|\d{7}|\d{8}|\d{9}|\d{10}|\d{11}|\d{12}|\d{13}|\d{14}|\d{15}|\d{16}|\d{17}|\d{18}|\d{19}|\d{20}|\d{21})$/;
+		var reg_phone = /^(\d{5}|\d{6}|\d{7}|\d{8}|\d{9}|\d{10}|\d{11}|\d{12}|\d{13}|\d{14}|\d{15}|\d{16}|\d{17}|\d{18}|\d{19}|\d{20}|\d{21})$/;
 		// 省份证
-		var reg_identity=/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
-            
+		var reg_identity = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+
 
 
 		// doAsync()执行顺序如下:
 		// do it, asd, 3333, fast4444
 		function asyncExe() {
-	      return new Promise((resolve, reject) => {
-	        setTimeout(() => {
-	          console.log('do it');
-	          resolve('asd');
-	        }, 2000);
-	      });
-	    },
-	    async function doAsync() {
-	      let aa = await this.aa().then(res => {console.log(res); return '3333';}).then(res => {console.log(res); return 444;});
-	      console.log('fast' + aa);
-	    }
+			return new Promise((resolve, reject) => {
+				setTimeout(() => {
+					console.log('do it');
+					resolve('asd');
+				}, 2000);
+			});
+		},
+		async function doAsync() {
+			let aa = await this.aa().then(res => { console.log(res); return '3333'; }).then(res => { console.log(res); return 444; });
+			console.log('fast' + aa);
+		}
+
+
+
+
+
+		// ██████╗ ██████╗  ██████╗ ████████╗ ██████╗ ████████╗██╗   ██╗██████╗ ███████╗
+		// ██╔══██╗██╔══██╗██╔═══██╗╚══██╔══╝██╔═══██╗╚══██╔══╝╚██╗ ██╔╝██╔══██╗██╔════╝
+		// ██████╔╝██████╔╝██║   ██║   ██║   ██║   ██║   ██║    ╚████╔╝ ██████╔╝█████╗  
+		// ██╔═══╝ ██╔══██╗██║   ██║   ██║   ██║   ██║   ██║     ╚██╔╝  ██╔═══╝ ██╔══╝  
+		// ██║     ██║  ██║╚██████╔╝   ██║   ╚██████╔╝   ██║      ██║   ██║     ███████╗
+		// ╚═╝     ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝    ╚═╝      ╚═╝   ╚═╝     ╚══════╝
+
+
+		function b(arg1, arg2) {
+			this.b_1 = arg1;
+			this.b_2 = arg2;
+		}
+		b.age = 'construct method';
+		b.prototype.sex = 'prototype method'
+		a = new b(1, 2);
+		// 该对象是另一个对象的原型
+		b.prototype.isPrototypeOf(a);
+		// 获取 a 的原型对象
+		Object.getPrototypeOf(a) === b.prototype;
+		// 辨别对象下面的方法或属性是属于它本身
+		'b_1' in a && a.hasOwnProperty('b_1')
+
 
 
 		// 查找原型的时候，只找一级
@@ -178,17 +218,17 @@
 			console.log('this', this);
 			this.name = name ? name : '默认值';
 			// 对象方法 !!! 因为函数也是一个对象 !!!
-			this.Print = function() { // 写入到 pp 下面
+			this.Print = function () { // 写入到 pp 下面
 				console.log('我是', this.name);
 			}
 		}
 		// 类方法, 出现在pp的原型__proto__下的constructor下面, 所以该方法是构造函数所有
-		People.Run = function() {
+		People.Run = function () {
 			// console.log(this) // 指向People函数
 			console.log('i can run', this.name); // 函数也是对象， 所以this.name是函数名：People
 		}
 		// 原型方法  写入到 pp.__proto__ 下面
-		People.prototype.Introduce = function() {
+		People.prototype.Introduce = function () {
 			console.log('可以是使用this.name:', this.name)
 		};
 
@@ -203,19 +243,25 @@
 		People()
 
 
-
+		// ███████╗██╗    ██╗██╗████████╗ ██████╗██╗  ██╗
+		// ██╔════╝██║    ██║██║╚══██╔══╝██╔════╝██║  ██║
+		// ███████╗██║ █╗ ██║██║   ██║   ██║     ███████║
+		// ╚════██║██║███╗██║██║   ██║   ██║     ██╔══██║
+		// ███████║╚███╔███╔╝██║   ██║   ╚██████╗██║  ██║
+		// ╚══════╝ ╚══╝╚══╝ ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝
+		                                              
 
 		// 范围选择
 		let val = 5;
-		switch(true) {
-		  case (val > 3 && val <= 12):
-		    console.log(val);
-		    break;
-		  default:
-		    break;
+		switch (true) {
+			case (val > 3 && val <= 12):
+				console.log(val);
+				break;
+			default:
+				break;
 		}
 
-	
+
 		// 节流
 		function throttle(fn, threshold) {
 			console.log('我一直在刷新？');
@@ -224,7 +270,7 @@
 			threshold = threshold || 3000;
 			let first = true;
 			console.log('start:', start);
-			return function() {
+			return function () {
 				let context = this,
 					args = arguments,
 					curr = new Date() - 0;
@@ -235,14 +281,14 @@
 					start = curr;
 				} else {
 					//让方法在脱离事件后也能执行一次
-					timeout = setTimeout(function() {
+					timeout = setTimeout(function () {
 						fn.apply(context, args);
 					}, first ? 0 : threshold);
 					first = false;
 				}
 			}
 		}
-		var mousemove = throttle(function(e) {
+		var mousemove = throttle(function (e) {
 			console.log('相隔一段时间了？');
 			console.log(e.pageX, e.pageY);
 		});
@@ -254,20 +300,20 @@
 		// 防抖
 		function debounce(func, delay) {
 			var timeout;
-			return function(e) {
+			return function (e) {
 				console.log("清除", timeout, e.target.value)
 				clearTimeout(timeout);
 				var context = this,
 					args = arguments;
 				console.log("新的", timeout, e.target.value)
-				timeout = setTimeout(function() {
+				timeout = setTimeout(function () {
 					console.log("----")
 					console.log(context);
 					func.apply(context, args);
 				}, delay);
 			};
 		};
-		var validate = debounce(function(e) {
+		var validate = debounce(function (e) {
 			console.log("change", e.target.value, new Date - 0)
 		}, 380);
 		// 绑定监听
@@ -382,7 +428,7 @@
 		}
 
 		Watcher.prototype = {
-			update: function() {
+			update: function () {
 				console.log('原型里的this', this);
 				this.get();
 				console.log('出发get回来了');
@@ -395,7 +441,7 @@
 					this.node.value = this.value;
 				}
 			},
-			get: function() {
+			get: function () {
 				console.log('来过get方法');
 				this.value = this.vm[this.name]; // this.vm[this.name]会触发相应属性的get
 			}
@@ -406,7 +452,7 @@
 			console.log('obj1:', obj)
 			let dep = new Dep();
 			Object.defineProperty(obj, key, {
-				get: function() {
+				get: function () {
 					console.log('Dep.target', Dep.target)
 					// 添加订阅者watcher到主题对象Dep
 					if (Dep.target) {
@@ -415,7 +461,7 @@
 					}
 					return val;
 				},
-				set: function(newVal) {
+				set: function (newVal) {
 					if (newVal === val) {
 						return
 					}
@@ -439,11 +485,11 @@
 			console.log(this)
 		}
 		Dep.prototype = {
-			addSub: function(sub) {
+			addSub: function (sub) {
 				this.subs.push(sub);
 				console.log('this.subs:', this.subs);
 			},
-			notify: function() {
+			notify: function () {
 				console.log(this)
 				this.subs.forEach((sub) => {
 					sub.update();
@@ -690,7 +736,7 @@
 				console.log('值都进来了', aa);
 			}
 		});
-		window.onload = function() {
+		window.onload = function () {
 			let aa = $('ul li');
 			for (index of aa) {
 				if ($(index).text() === '') {
@@ -698,17 +744,17 @@
 				}
 			}
 			var list = [{
-					num: 1,
-					id: 3
-				},
-				{
-					num: 2,
-					id: 4
-				},
-				{
-					num: 3,
-					id: 5
-				}
+				num: 1,
+				id: 3
+			},
+			{
+				num: 2,
+				id: 4
+			},
+			{
+				num: 3,
+				id: 5
+			}
 			]
 
 			console.log("1到100的和是: " + count(100));
@@ -794,18 +840,18 @@
 			//call调用匿名函数
 			//内存回收机制，此处的变量只在函数运行期间有用
 			var animals = [{
-					species: 'Lion',
-					name: 'King'
-				},
-				{
-					species: 'Whale',
-					name: 'Fail'
-				}
+				species: 'Lion',
+				name: 'King'
+			},
+			{
+				species: 'Whale',
+				name: 'Fail'
+			}
 			];
 
 			for (let i = 0, len = animals.length; i < len; i++) {
-				(function(i) {
-					this.print = function() {
+				(function (i) {
+					this.print = function () {
 						console.log('#' + i + ' ' + this.species + ': ' + this.name); //this === animals[i]
 					}
 					this.print();
