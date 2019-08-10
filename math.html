@@ -146,15 +146,24 @@
 		console.log('window', window);
 	</script>
 	<script type="text/javascript">
+		
 
 		// 响应式设计
-		responsiveLayout() {
-			let dsgn_w = 414;
-			let dsgn_fontSize = 15;
-			let win_w = document.documentElement.offsetWidth;
-			let ratio = win_w / dsgn_w;
-			document.documentElement.style.fontSize = `${ratio * dsgn_fontSize}px`;
+		resLayout(dsgn_f, dsgn_w) {
+			// 320 - 480 px
+			// 设计 - 字体宽、图宽
+			var dsgn_f = dsgn_f || 20, dsgn_w = dgsn_w || 375;
+			// 当前设备的宽 - 超出主流范围 则居中内容.box{width: 100%; max-width: 480px;margin: 0 auto;}
+			var client_w = document.documentElement.clientWidth < 480 ? document.documentElement.clientWidth : 480;
+			// 当前设备的字体
+			document.documentElement.style.fontSize = client_w * dsgn_f / dsgn_w + 'px';
 		}
+		resLayout();
+		window.addEventListener('resize', function() {
+			setTimeout(function() {
+				resLayout();
+			}, 200);
+		});
 
 
 
