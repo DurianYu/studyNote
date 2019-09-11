@@ -7,8 +7,59 @@ import emoji as emoji
 import requests
 from bs4 import BeautifulSoup
 
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+
+chrome_options = webdriver.ChromeOptions()
+# 使用headless无界面浏览器模式
+chrome_options.add_argument('--headless') #增加无界面选项
+chrome_options.add_argument('--disable-gpu') #如果不加这个选项，有时定位会出现问题
+chrome_options.add_argument("--start-maximized"); #浏览器窗口最大化
+driver = webdriver.Chrome(chrome_options=chrome_options)
+driver.implicitly_wait(30)
+
 BASIC_PATH = '/Users/mason/Downloads/jsp'
 FILE_NAME = '视频搜索：自我认知.txt'
+
+water_session = requests.Session()
+
+
+
+def water_login():
+    driver.get('http://dnqia.cn/')
+
+
+
+
+    driver.find_element_by_css_selector('.navbar .nav li:nth-child(1) a').click()
+    driver.find_element_by_css_selector('#phone').send_keys("18202877162")
+    driver.find_element_by_css_selector('#password').send_keys('a490311780')
+    time.sleep(0.3)
+    driver.find_element_by_css_selector('#loginModal .btn-success').click()
+
+
+    # headers = {
+    #     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36 OPR/63.0.3368.71',
+    #     'Referer': 'http://dnqia.cn/',
+    #     'Host': 'dnqia.cn',
+    #     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    # }
+    # data = {
+    #     "phone": '18202877162',
+    #     "pwd": 'a490311780',
+    #     "isReg": 'false'
+    # }
+    # url = 'http://dnqia.cn/ajax/login.php'
+    # browser = webdriver.Chrome()
+    # browser.get('http://www.baidu.com/')
+    # aa = water_session.post(url, data=dataheaders)
+    # print('login: ', aa.text)
+    # print('water_session: ', water_session.cookies.get_dict())
+
 
 def real_download(data, index):
     print(f'下载{data}')
@@ -97,23 +148,40 @@ def parse_text(text):
 
 # 解析视频地址
 def parse_mp4_url(url):
-    payload = {
-        'link': url
-    }
-    url= 'http://dnqia.cn/ajax/analyze.php'
-    r = 'fill'
+    driver.find_element_by_css_selector('.row .link-input').send_keys(url)
+    driver.find_element_by_css_selector('.row .btn').click()
+    video_url = ''
     try:
-        r = requests.post(url, payload, timeout=10)
+        video_url = driver.find_element_by_css_selector('.thumbnail .btn-success').get_attribute('href')
     except Exception as e:
         print(e)
         return None
 
-    res = json.loads(r.text)
-    print('res: ', res)
-    if res and res['retCode'] == 200:
-        return res['data']['video']
+    driver.find_element_by_css_selector('.row .btn-danger').click()
+    print('_is_get_video_url', video_url)
+
+    if video_url:
+        return video_url
     else:
         return None
+
+    # payload = {
+    #     'link': url
+    # }
+    # url= 'http://dnqia.cn/ajax/analyze.php'
+    # r = 'fill'
+    # try:
+    #     r = requests.post(url, payload, timeout=10)
+    # except Exception as e:
+    #     print(e)
+    #     return None
+
+    # res = json.loads(r.text)
+    # print('res: ', res)
+    # if res and res['retCode'] == 200:
+    #     return res['data']['video']
+    # else:
+    #     return None
 
 def parse_uri(url):
     payload = {
@@ -224,6 +292,9 @@ if __name__ == '__main__':
         print('缺少参数')
         exit(0)
 
+
+    water_login()
+
     BASIC_PATH = args.outdir
     FILE_NAME = args.filename
 
@@ -263,3 +334,4 @@ if __name__ == '__main__':
         time.sleep(1)
         real_download(item, index)
         index += 1
+    driver.quit()
