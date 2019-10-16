@@ -1,0 +1,104 @@
+@mixin flex($direction) {
+  display: flex;
+  justify-content: $direction;
+  align-items: center;
+}
+
+@mixin line-ellipsis($line-num) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -moz-webkit-box-orient: vertical;
+  -ms-webkit-box-orient: vertical;
+  -o-webkit-box-orient: vertical;
+  -webkit-line-clamp: $line-num;
+  -moz-webkit-line-clamp: $line-num;
+  -ms-webkit-line-clamp: $line-num;
+  -o-webkit-line-clamp: $line-num;
+}
+@mixin one-line() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.translate-x-y-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.translate-x-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.translate-y-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.flex-x-y-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-x-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-y-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-x-sb {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-flow-col {
+  flex-flow: column;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.unseen {
+  display: none;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+ .pointer {
+   cursor: pointer;
+ }
+

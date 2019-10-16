@@ -147,6 +147,69 @@
 	</script>
 	<script type="text/javascript">
 
+		// 数字过万转换
+		function toGreatNum(num) {
+			num = num || '';
+			return String(num).length > 4 ? String(num).slice(0, -4) + '.' + String(num).slice(-4, -3) + 'w' : num;
+		}
+
+		// ios键盘留白处理
+		function handleBlank() {
+			setTimeout(function() {
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+				window.pageXOffset = 0;
+			}, 300);
+		}
+
+		// 获取url上的参数
+		function getUrlVal(variable) {
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+			for (var i = 0; i < vars.length; i++) {
+				var pair = vars[i].split("=");
+				if (pair[0] == variable) {
+					return pair[1];
+				}
+			}
+			return (false);
+		}
+
+		// 查找数据的位置
+		function getIndex(target_ary, condition_name, condition_val) {
+			var index = 'notfind';
+			for (var i = 0, len = target_ary.length; i < len; i++) {
+				if (target_ary[i][condition_name] == condition_val) {
+					index = i;
+					break;
+				}
+			}
+			return index;
+		}
+
+		// 关闭其它，除了当前
+		function closeOther(target_ary, condition_name, condition_val, close_attr) {
+			for (var i = 0, len = target_ary.length; i < len; i++) {
+				if (target_ary[i][condition_name] != condition_val) {
+					target_ary[i][close_attr] = false;
+				}
+			}
+		}
+
+		// 强制刷新页面
+		function forceRefresh() {
+			window.onpageshow = function(e) {
+				if (e.persisted) {
+					window.location.reload();
+				}
+			}
+		}
+
+		
+
+
+
+
 
 		// 10的三次方
 		console.log(e3);
