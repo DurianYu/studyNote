@@ -147,6 +147,89 @@
 	</script>
 	<script type="text/javascript">
 
+		// 播放器进度条
+    var ProgressBar = function(bar, btn, step) {
+      this.bar = bar;
+      this.btn = btn;
+      this.step = step;
+      this.init();
+    }
+
+    ProgressBar.prototype = {
+      init: function() {
+        var t = this,
+          d = document,
+          w = window,
+          percent = 0,
+          reg_phone = /ipad|iphone|midp|rv:1.2.3.4|ucweb|android|windows ce|windows mobile/i;
+
+        if (reg_phone.test(navigator.userAgent)) {
+          t.btn.ontouchstart = function(e) {
+            e.preventDefault();
+            var x = e.changedTouches[0].pageX, // 点击位置距离body的位置
+              l = this.offsetLeft, // 包含padding距离body内侧的距离
+              max = t.bar.offsetWidth - this.offsetWidth;
+            t.btn.ontouchmove = function(e) {
+              var move_x = e.changedTouches[0].pageX;
+              to = Math.min(max, Math.max(-2, l + move_x - x));
+              percent = Math.round(Math.max(0, to / max) * 100);
+              t.ondrag(percent);
+              w.getSelection ? w.getSelection().removeAllRanges() : d.selection.empty();
+            }
+            t.btn.ontouchend = function(e) {
+              this.ontouchmove = null;
+              t.ondragEnd(percent);
+              this.ontouchend = null;
+            };
+          }
+        } else {
+          t.btn.onmousedown = function(e) {
+            var x = (e || w.event).clientX, // 点击位置距离body的位置
+              l = this.offsetLeft, // 包含padding距离body内侧的距离
+              max = t.bar.offsetWidth - this.offsetWidth;
+            d.onmousemove = function(e) {
+              var move_x = (e || w.event).clientX;
+              to = Math.min(max, Math.max(-2, l + move_x - x));
+              percent = Math.round(Math.max(0, to / max) * 100);
+              t.ondrag(percent);
+              w.getSelection ? w.getSelection().removeAllRanges() : d.selection.empty();
+            }
+            d.onmouseup = function(e) {
+              this.onmousemove = null;
+              t.ondragEnd(percent);
+              this.onmouseup = null;
+            };
+          }
+        }
+      },
+      ondrag: function(p) {
+        this.btn.style.left = p + '%';
+        this.step.style.width = p + '%';
+        this.ondragMove(p);
+      },
+      ondragMove: function() {},
+      ondragEnd: function() {},
+    }
+
+    var progressBar = new ProgressBar($('.chat-tool .progress')[0], $('.chat-tool .progress-drop')[0], $('.chat-tool .progress-done')[0]);
+    progressBar.ondragMove = function(p) {
+      console.log('ondragMove', p);
+      myPlayer.off('timeupdate', updatePlayTime);
+      setPlayTime(myPlayer.duration() * p * 0.01);
+    }
+    progressBar.ondragEnd = function(p) {
+      console.log('ondragEnd', p);
+      myPlayer.currentTime(myPlayer.duration() * p * 0.01);
+      myPlayer.on('timeupdate', updatePlayTime);
+    }
+		
+
+
+
+
+
+
+
 		// 数字过万转换
 		function toGreatNum(num) {
 			num = num || '';
@@ -205,7 +288,7 @@
 			}
 		}
 
-		
+
 
 
 
@@ -288,7 +371,7 @@
 		Object.getPrototypeOf(a) === b.prototype;
 		// 辨别对象下面的方法或属性是属于它本身
 		'b_1' in a && a.hasOwnProperty('b_1')
-
+		
 
 
 		// 查找原型的时候，只找一级
