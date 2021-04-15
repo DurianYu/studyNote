@@ -1,0 +1,313 @@
+html,body{
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  color: #666;
+}
+
+.all-height{
+  height: 100%;
+}
+.all-width{
+  width: 100%;
+}
+
+.btn-center.ivu-btn{
+  width: 120px;
+  display: block;
+  margin: 0 auto;
+}
+
+.shuiwuju-header{
+  width: 100%;
+  height: 110px;
+  margin-bottom: 20px;
+}
+
+.flex-con{
+  display: flex;
+}
+
+.ivu-steps .ivu-steps-title{
+  line-height: 26px;
+}
+
+.center{
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.blod {
+  font-weight: bold;
+}
+
+.all-padding {
+  padding: 50px;
+  h2 {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+}
+
+.sms-code {
+  display: flex;
+  button {
+    margin-left: 10px;
+  }
+}
+
+.table-action {
+  a {
+    margin: 0 6px;
+  }
+}
+
+.ivu-drawer {
+  top: 59px !important;
+}
+
+.anchorBL {
+  display:none;
+}
+$thrid-blue: #1E82D8;
+$core-blur: #6672FB;
+$title: #333333;
+$content: #595959;
+$assist: #8C8C8C;
+
+
+// 规定
+.thrid-head {
+  background: $thrid-blue !important;
+  color: #ffffff !important;
+}
+
+.font1 {
+  font-size: 18px;
+  color: $title;
+  font-weight: bold;
+}
+
+.font1-b {
+  font-size: 18px;
+  color: $title;
+  font-weight: bold;
+}
+
+.font2 {
+  font-size: 16px;
+  color: $content;
+}
+
+.font2-b {
+  font-size: 16px;
+  color: $content;
+  font-weight: bold;
+}
+
+.font3 {
+  font-size: 14px;
+  color: $assist;
+  line-height: 28px;
+}
+.font3-b {
+  font-size: 14px;
+  color: $assist;
+  line-height: 28px;
+  font-weight: bold;
+}
+
+.btn-next {
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  &.ivu-btn-primary:hover, .ivu-btn-primary:hover {
+    // background-color: #A16BFF;
+    // border-color: #A16BFF;
+  }
+  &.ivu-btn, .ivu-btn {
+    min-width: 120px;
+    height: 40px;
+    background: #015FFF;
+    padding: 0 15px;
+    font-size: 16px;
+    line-height: 40px;
+  }
+}
+
+.btn-next-a {
+  position: absolute;
+  @extend .btn-next;
+}
+
+.btn-next-f {
+  position: fixed;
+  @extend .btn-next;
+}
+
+$space: 20px;
+
+.page-space-t {
+  padding-top: $space;
+}
+.page-space-l {
+  padding: 0 0 0 $space;
+}
+.page-space-l-t {
+  padding: $space 0 0 $space;
+}
+
+
+// 自定义常用
+@mixin flex($direction) {
+  display: flex;
+  justify-content: $direction;
+  align-items: center;
+}
+
+@mixin line-ellipsis($line-num) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -moz-webkit-box-orient: vertical;
+  -ms-webkit-box-orient: vertical;
+  -o-webkit-box-orient: vertical;
+  -webkit-line-clamp: $line-num;
+  -moz-webkit-line-clamp: $line-num;
+  -ms-webkit-line-clamp: $line-num;
+  -o-webkit-line-clamp: $line-num;
+}
+@mixin one-line() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+*{
+  word-break: break-all;
+}
+
+.translate-x-y-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.translate-x-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.translate-y-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.flex-x-y-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-x-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-y-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-x-sb {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-x-sa {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-flow-col {
+  flex-flow: column;
+}
+
+.flex-flow-wrap {
+  flex-flow: wrap;
+}
+
+.flex-x-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flex-x-start {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.unseen {
+  display: none;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+ .pointer {
+   cursor: pointer;
+ }
+
+.hover:hover {
+  color:rgba(85,165,97,1) !important;
+}
+
+.wrap {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-start {
+  text-align: start;
+}
+
+.text-end {
+  text-align: end;
+}
