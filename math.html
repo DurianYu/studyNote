@@ -147,6 +147,14 @@
 	</script>
 	<script type="text/javascript">
 
+		// Vue路由传参注意事项
+		// 1、路由path；/login/:id
+		this.$router.push({path: '/login/1'})
+		// 2、name+params 刷新页面数据丢失
+		this.$router.push({name: '', params: { id: 1}})
+		// 3、path+query 刷新页面数据不丢失
+		this.$router.push({path: '/login', query: { id: 1})
+
 		// vue css 深度选择器
 		// 一般css: >>>
 		// less/sass: /deep/
