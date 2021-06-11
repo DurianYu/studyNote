@@ -26,6 +26,7 @@
   word-break: break-all;
 }
 
+/************ 布局  **************/
 .translate-x-y-center {
   position: absolute;
   left: 50%;
@@ -146,4 +147,17 @@
 
 .text-end {
   text-align: end;
+}
+
+
+/************ 块中间的小竖线  **************/
+::after {
+  content: '';
+  position: absolute;
+  right: 0px;
+  width: 2px;
+  height: 1.25em;
+  background-color: rgba(255,255,255, 0.3);
+  transform: translateY(-50%);
+  top: 50%;
 }
