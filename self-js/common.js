@@ -128,3 +128,15 @@ function smoothScrollTo(boxEl, scrollEl, duration) {
 				resLayout();
 			}, 200);
 		});
+
+		// 数组排序
+		 sortTree(treeData) {
+                let reg = /^\d*/;
+                return treeData.sort((a, b) => {
+                    if(a.orderNum || b.orderNum) return 1;
+                    let num1 = reg.exec(a.name)[0];
+                    let num2 = reg.exec(b.name)[0];
+                    if(num1 && num2) return num1 - num2;
+                    return a.name.localeCompare(b.name, 'zh');
+                });
+            }
