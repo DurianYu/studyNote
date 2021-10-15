@@ -147,6 +147,46 @@
 	</script>
 	<script type="text/javascript">
 
+		// 手动 深拷贝
+		function deepCopy(targetObj) {
+			function isIterable(obj) {
+				return ['Object', 'Array'].includes(Object.prototype.toString.call(obj).slice(8, -1));
+			}
+			if (!targetObj || !isIterable(targetObj)) return console.error('type error');
+			let newObj = Array.isArray(targetObj) ? [] : {};
+			for (let key in targetObj) {
+				if (targetObj.hasOwnProperty(key)) {
+					newObj[key] = isIterable(targetObj[key]) ? deepCopy(targetObj[key]) : targetObj[key];
+				}
+			}
+			return newObj;
+		}
+
+		// instanceof 实现, 判断构造函数的原型是否出现在对象原型链上的任何位置
+		function _instanceof(left, right) {
+			// 对象原型
+			let __proto__ = Object.getPrototypeOf(left);
+			// 构造函数原型
+			let prototype = right.prototype;
+			return __proto__ ? __proto__ === prototype ? true : _instanceof(__proto__, prototype) : false;
+		}
+
+		// new 实现
+		objectFactory() {
+			let newObject = null;
+			let constructor = Array.prototype.shift.call(arguments);
+			let result = null;
+			// 判断参数是否是 函数
+			if (typeof constructor !== 'function') return console.error('type error');
+			// 新建一个对象，且原型指向构造函数的原型
+			newObject = Object.create(constructor.prototype);
+			// 将this指向新建的对象，并执行构造函数
+			result = constructor.apply(newObject, arguments);
+			// 判断返回对象
+			let flag = result && (typeof result === "object" || typeof result === 'function');
+			return flag ? result : newObject;
+		}
+
 		// call实现
 		Function.prototype._call = function (context) {
 			// 判断xxx.call(context)，调用的对象（xxx方法）是否为函数
@@ -400,56 +440,35 @@
 
 
 		// 节流
-		function throttle(fn, threshold) {
-			console.log('我一直在刷新？');
-			let timeout;
-			let start = new Date;
-			threshold = threshold || 3000;
-			let first = true;
-			console.log('start:', start);
+		function throttle(fn, delay) {
+			let startTime = Date.now();
 			return function () {
-				let context = this,
-					args = arguments,
-					curr = new Date() - 0;
-				clearTimeout(timeout) //总是干掉事件回调
-				if (curr - start >= threshold) {
-					console.log("now", curr, curr - start) //注意这里相减的结果，都差不多是160左右
-					fn.apply(context, args) //只执行一部分方法，这些方法是在某个时间段内执行一次
-					start = curr;
-				} else {
-					//让方法在脱离事件后也能执行一次
-					timeout = setTimeout(function () {
-						fn.apply(context, args);
-					}, first ? 0 : threshold);
-					first = false;
+				let context = this, args = arguments, curTime = Date.now();
+				if (curTime - startTime >= delay) {
+					startTime = Date.now();
+					return fn.apply(context, args);
 				}
 			}
 		}
 		var mousemove = throttle(function (e) {
-			console.log('相隔一段时间了？');
 			console.log(e.pageX, e.pageY);
-		});
+		}, 1e3);
 		// 绑定监听
 		document.querySelector("#panel").addEventListener('mousemove', mousemove);
 
 
 
 		// 防抖
-		function debounce(func, delay) {
-			var timeout;
-			return function (e) {
-				console.log("清除", timeout, e.target.value)
-				clearTimeout(timeout);
-				var context = this,
-					args = arguments;
-				console.log("新的", timeout, e.target.value)
-				timeout = setTimeout(function () {
-					console.log("----")
-					console.log(context);
-					func.apply(context, args);
+		function debounce(fn, delay) {
+			let timer = null;
+			return function () {
+				let context = this, args = arguments;
+				if (timer) { clearTimeout(timer); timer = null };
+				timer = setTimeout(() => {
+					fn.apply(context, [...args]);
 				}, delay);
-			};
-		};
+			}
+		}
 		var validate = debounce(function (e) {
 			console.log("change", e.target.value, new Date - 0)
 		}, 380);
