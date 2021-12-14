@@ -147,6 +147,97 @@
 	</script>
 	<script type="text/javascript">
 
+		// indexDB
+		let request = indexedDB.open('bimModel');
+		// 打开已有数据库时触发
+		request.onsuccess = function (e) {
+			console.log('open sucess', e);
+			let db = request.result;
+		}
+		request.onerror = function (e) {
+			console.onerror('open database error', e);
+		}
+		// 新建时或版本更新时触发
+		request.onupgradeneeded = function (e) {
+			console.log('datase upgrade', e);
+			let db = e.target.result;
+			let objectStore = null;
+			// 检查表存在否
+			if (!db.objectStoreNames.contains('person')) {
+				// 创建表，并指定主键
+				objectStore = db.createObjectStore('person', { keyPath: 'id' });
+				// 为表新建索引, 索引名，索引所在的属性，配置项
+				objectStore.createIndex('name', 'name', { unique: false });
+				objectStore.createIndex('email', 'email', { unique: true });
+			}
+		}
+		// 新增数据
+		function add(db) {
+			let request = db.transaction(['person'], 'readwrite')
+				.objectStore('person')
+				.add({ id: 1, name: '张三', age: 24, email: 'zhangsan@qq.com' });
+			request.onsuccess = e => console.log('wirte success', e);
+			request.onerror = e => console.log('wirte failed', e.target.error.message);
+		}
+		// 读取数据
+		function read(db) {
+			let objectStore = db.transaction(['person']).objectStore('person');
+			let request = objectStore.get(1);
+			// objectStore.getAll(); // 获取表里所有数据
+			request.onsuccess = e => {
+				console.log('read success', e.target.result);
+				let res = e.target.result;
+			};
+			request.onerror = e => console.log('read failed', e.target.error.message);
+		}
+		// 索引查找
+		function index(db) {
+			let objectStore = db.transaction(['person'], 'readwrite').objectStore('person');
+			let index = objectStore.index('name');
+			let request = index.get('李四'); // 第一个数据
+			// let request = index.getAll('李四'); // 全部叫李四的数据 - 疑似被废弃
+			request.onsuccess = e => console.log('index success', e.target.result);
+			request.onerror = e => console.log('index failed', e.target.error.message);
+		}
+		// 遍历 - 获取所有数据
+		function readAll(db) {
+			let objectStore = db.transaction(['person']).objectStore('person');
+			// objectStore.openCursor().onsuccess = e => {
+			// 	console.log('on openCursor', e.target.result)
+			// 	let cursor = e.target.result;
+			// 	if (cursor) {
+			// 		console.log('key:', cursor.key, 'value:', cursor.value);
+			// 		cursor.continue();
+			// 	};
+			// };
+			objectStore.index('name').openCursor().onsuccess = e => {
+				console.log('on openCursor', e.target.result)
+				let cursor = e.target.result;
+				if (cursor) {
+					console.log('key:', cursor.key, 'value:', cursor.value);
+					cursor.continue();
+				};
+			};
+		}
+		// 更新
+		function update(db) {
+			let request = db.transaction(['person'], 'readwrite')
+				.objectStore('person')
+				.put({ id: 3, name: '李四', age: 34, email: 'lisi@qq.com' });
+			request.onsuccess = e => console.log('update success', e);
+			request.onerror = e => console.log('update failed', e.target.error.message);
+		}
+		// 删除
+		function remove(db) {
+			let request = db.transaction(['person'], 'readwrite')
+				.objectStore('person')
+				.delete(3);
+			request.onsuccess = e => console.log('remove success', e);
+			request.onerror = e => console.log('remove failed', e.target.error.message);
+		}
+
+
+
 		// 手动 深拷贝
 		function deepCopy(targetObj) {
 			function isIterable(obj) {
@@ -168,7 +259,7 @@
 			let __proto__ = Object.getPrototypeOf(left);
 			// 构造函数原型
 			let prototype = right.prototype;
-			return __proto__ ? __proto__ === prototype ? true : _instanceof(__proto__, prototype) : false;
+			return __proto__ ? __proto__ === prototype ? true : _instanceof(__proto__, right) : false;
 		}
 
 		// new 实现
