@@ -1,0 +1,1 @@
+cmd /K "title Lazy's Man & pip install -r requirements.txt & kangyi.py"
