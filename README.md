@@ -16,6 +16,7 @@
   
   - http://img.ksbbs.com/asset/Mon_1704/15868902d399b87.flv
     http://1011.hlsplay.aodianyun.com/demo/game.flv
+    https://sf1-hscdn-tos.pstatp.com/obj/media-fe/xgplayer_doc_video/flv/xgplayer-demo-360p.flv
 
 - hls
   
