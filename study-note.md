@@ -1,3 +1,4 @@
+# https://v1.v2ai.top/link/Kba8mtghHxRsh0kD?sub=3
 ### 哪个`对象`调用函数，函数里面的`this`指向哪个`对象`。
 
 > 面向对象就是对面向过程的封装
