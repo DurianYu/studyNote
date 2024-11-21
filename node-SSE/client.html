@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE - TEST</title>
+</head>
+
+<body>
+    <h1>i'll here</h1>
+    <script>
+        var source = new EventSource('http://127.0.0.1:4456/chat');
+        source.onopen = function (event) {
+            console.log('Connection open ...');
+        };
+        source.onerror = function (event) {
+            console.log('Connection close.');
+        };
+        source.addEventListener('chatStream', function (event) {
+            console.log('firstChat: ' + event.data);
+        });
+        source.onmessage = function (event) {
+            console.log('message: ' + event.data);
+        };
+    </script>
+</body>
+
+</html>
